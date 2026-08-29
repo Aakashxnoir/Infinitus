@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "db:seed": "node scripts/seed.mjs"
+    "db:seed": "node scripts/db/seed.mjs",
+    "branding:optimize": "node scripts/optimize-branding.mjs"
   },
   "dependencies": {
     "next": "^15",

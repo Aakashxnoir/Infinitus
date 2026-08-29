@@ -1,4 +1,6 @@
 import { Space_Grotesk, Inter } from 'next/font/google';
+import { INFINITUS_LOGO } from '@/lib/branding';
+import { CLUB_NAME, COLLEGE_NAME, SITE } from '@/lib/site';
 import '@/styles/globals.css';
 
 const heading = Space_Grotesk({
@@ -16,21 +18,61 @@ const body = Inter({
 });
 
 export const metadata = {
-  title: 'INFINITUS — Math Club',
-  description:
-    'INFINITUS is the official math club website — meet the team, explore past and upcoming events, and get in touch.',
+  metadataBase: new URL(SITE.url),
+  title: {
+    default: SITE.title,
+    template: SITE.titleTemplate,
+  },
+  description: SITE.description,
+  keywords: SITE.keywords,
+  authors: [{ name: CLUB_NAME }],
+  creator: CLUB_NAME,
+  publisher: COLLEGE_NAME,
+  icons: {
+    icon: [
+      { url: '/brand/favicon.png', sizes: '32x32', type: 'image/png' },
+      { url: '/brand/infinitus-nav.webp', sizes: '80x80', type: 'image/webp' },
+    ],
+    shortcut: '/brand/favicon.png',
+    apple: [{ url: '/apple-icon.png', sizes: '180x180', type: 'image/png' }],
+  },
   openGraph: {
-    title: 'INFINITUS — Math Club',
-    description:
-      'INFINITUS is the official math club website — meet the team, explore past and upcoming events, and get in touch.',
+    title: SITE.title,
+    description: SITE.description,
     type: 'website',
+    locale: SITE.locale,
+    siteName: CLUB_NAME,
+    images: [
+      {
+        url: INFINITUS_LOGO.og,
+        width: 512,
+        height: 512,
+        alt: CLUB_NAME,
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary',
+    title: SITE.title,
+    description: SITE.description,
+    images: [INFINITUS_LOGO.og],
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${heading.variable} ${body.variable}`}>
-      <body className="font-body antialiased">{children}</body>
+    <html
+      lang="en"
+      className={`${heading.variable} ${body.variable}`}
+      suppressHydrationWarning
+    >
+      <body className="font-body antialiased" suppressHydrationWarning>
+        {children}
+      </body>
     </html>
   );
 }

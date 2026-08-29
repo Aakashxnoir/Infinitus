@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getSupabaseClient } from '@/lib/supabaseClient';
+import { saveContactMessage } from '@/lib/contactStore';
 import { isRateLimited } from '@/lib/rateLimiter';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -40,17 +40,25 @@ export async function POST(request) {
     );
   }
 
-  const trimmed = { name: name.trim(), email: email.trim(), message: message.trim() };
+  const trimmed = {
+    name: name.trim(),
+    email: email.trim(),
+    message: message.trim(),
+  };
 
-  const supabase = getSupabaseClient();
-  if (supabase) {
-    const { error } = await supabase.from('contact_messages').insert({
+  try {
+    await saveContactMessage({
       name: trimmed.name,
       email: trimmed.email,
       message: trimmed.message,
-      ip_address: ip,
+      ipAddress: ip,
     });
-    if (error) console.error('Failed to store contact message', error);
+  } catch (err) {
+    console.error('Failed to store contact message', err);
+    return NextResponse.json(
+      { success: false, error: 'Could not save your message — please try again.' },
+      { status: 500 }
+    );
   }
 
   if (process.env.RESEND_API_KEY && process.env.CONTACT_RECEIVER_EMAIL) {
@@ -62,10 +70,11 @@ export async function POST(request) {
         to: process.env.CONTACT_RECEIVER_EMAIL,
         replyTo: trimmed.email,
         subject: `New contact message from ${trimmed.name}`,
-        text: trimmed.message,
+        text: `From: ${trimmed.name} <${trimmed.email}>\n\n${trimmed.message}`,
       });
     } catch (err) {
       console.error('Failed to send contact email', err);
+      // Message is already stored — still return success
     }
   }
 

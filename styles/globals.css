@@ -26,6 +26,54 @@ body {
   color: theme('colors.brand.ink');
 }
 
+@layer components {
+  .interactive-card {
+    @apply rounded-2xl border border-brand-skyDeep/60 bg-white/70 shadow-sm;
+    @apply transition-all duration-300 ease-out;
+    @apply hover:-translate-y-2 hover:border-brand-indigo/20 hover:bg-white/90;
+    @apply hover:shadow-xl hover:shadow-brand-indigo/10;
+  }
+
+  .interactive-btn {
+    @apply transition-all duration-300 ease-out;
+    @apply shadow-md shadow-brand-indigo/25;
+    @apply hover:-translate-y-1 hover:shadow-lg hover:shadow-brand-indigo/35;
+    @apply active:translate-y-0 active:shadow-md;
+  }
+
+  .interactive-btn-ghost {
+    @apply transition-all duration-200 ease-out;
+    @apply hover:-translate-y-0.5 hover:bg-brand-sky/80 hover:shadow-sm;
+  }
+
+  .interactive-link {
+    @apply transition-all duration-200 ease-out;
+    @apply hover:-translate-y-px hover:text-brand-indigoDeep;
+  }
+
+  .interactive-logo {
+    @apply transition-all duration-300 ease-out;
+    @apply hover:scale-105 hover:drop-shadow-[0_8px_24px_rgba(43,53,147,0.25)];
+  }
+
+  .interactive-nav-item {
+    @apply transition-all duration-200 ease-out;
+    @apply hover:-translate-y-0.5 hover:bg-brand-sky/70 hover:shadow-sm;
+  }
+
+  .interactive-input {
+    @apply transition-all duration-200 ease-out;
+    @apply shadow-sm;
+    @apply hover:border-brand-indigo/30 hover:shadow-md;
+    @apply focus:-translate-y-px focus:border-brand-indigo/40 focus:shadow-md focus:shadow-brand-indigo/10;
+  }
+
+  .interactive-icon-btn {
+    @apply transition-all duration-200 ease-out;
+    @apply hover:-translate-y-0.5 hover:bg-brand-sky/60 hover:shadow-sm;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -37,5 +85,16 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  .interactive-card,
+  .interactive-btn,
+  .interactive-btn-ghost,
+  .interactive-link,
+  .interactive-logo,
+  .interactive-nav-item,
+  .interactive-input,
+  .interactive-icon-btn {
+    transform: none !important;
   }
 }
