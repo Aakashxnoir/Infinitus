@@ -57,14 +57,16 @@ export default function ContactForm() {
   if (status === 'success') {
     return (
       <div role="status" className="interactive-card p-8 text-center">
-        <p className="font-heading text-lg font-semibold text-brand-ink">
+        <p className="font-heading text-lg font-semibold text-brand-navy dark:text-brand-white">
           {COPY.contact.formSuccessTitle}
         </p>
-        <p className="mt-2 text-sm text-brand-ink/60">{COPY.contact.formSuccessBody}</p>
+        <p className="mt-2 text-sm text-brand-ink/60 dark:text-brand-white/60">
+          {COPY.contact.formSuccessBody}
+        </p>
         <button
           type="button"
           onClick={() => setStatus('idle')}
-          className="interactive-link mt-4 text-sm font-semibold text-brand-indigo"
+          className="interactive-link mt-4 text-sm font-semibold text-brand-navy dark:text-brand-white"
         >
           {COPY.contact.formSuccessAgain}
         </button>
@@ -73,7 +75,11 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="space-y-4">
+    <form
+      onSubmit={handleSubmit}
+      noValidate
+      className="surface-panel space-y-4 p-6 sm:p-8"
+    >
       <div className="hidden" aria-hidden="true">
         <label htmlFor="company">Company</label>
         <input
@@ -88,7 +94,7 @@ export default function ContactForm() {
       </div>
 
       <div>
-        <label htmlFor="name" className="block text-sm font-medium text-brand-ink/80">
+        <label htmlFor="name" className="block text-sm font-medium text-brand-navy/80 dark:text-brand-white/80">
           Name
         </label>
         <input
@@ -98,7 +104,7 @@ export default function ContactForm() {
           onChange={handleChange('name')}
           aria-invalid={Boolean(errors.name)}
           aria-describedby={errors.name ? 'name-error' : undefined}
-          className="interactive-input mt-1 w-full rounded-lg border border-brand-skyDeep/70 bg-white/80 px-4 py-2.5 text-sm text-brand-ink outline-none ring-brand-indigo/40 focus:ring-2"
+          className="interactive-input mt-1 w-full px-4 py-2.5 text-sm outline-none"
         />
         {errors.name && (
           <p id="name-error" className="mt-1 text-xs text-red-600">
@@ -108,7 +114,7 @@ export default function ContactForm() {
       </div>
 
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-brand-ink/80">
+        <label htmlFor="email" className="block text-sm font-medium text-brand-navy/80 dark:text-brand-white/80">
           Email
         </label>
         <input
@@ -118,7 +124,7 @@ export default function ContactForm() {
           onChange={handleChange('email')}
           aria-invalid={Boolean(errors.email)}
           aria-describedby={errors.email ? 'email-error' : undefined}
-          className="interactive-input mt-1 w-full rounded-lg border border-brand-skyDeep/70 bg-white/80 px-4 py-2.5 text-sm text-brand-ink outline-none ring-brand-indigo/40 focus:ring-2"
+          className="interactive-input mt-1 w-full px-4 py-2.5 text-sm outline-none"
         />
         {errors.email && (
           <p id="email-error" className="mt-1 text-xs text-red-600">
@@ -128,7 +134,7 @@ export default function ContactForm() {
       </div>
 
       <div>
-        <label htmlFor="message" className="block text-sm font-medium text-brand-ink/80">
+        <label htmlFor="message" className="block text-sm font-medium text-brand-navy/80 dark:text-brand-white/80">
           Message
         </label>
         <textarea
@@ -138,7 +144,7 @@ export default function ContactForm() {
           onChange={handleChange('message')}
           aria-invalid={Boolean(errors.message)}
           aria-describedby={errors.message ? 'message-error' : undefined}
-          className="interactive-input mt-1 w-full resize-none rounded-lg border border-brand-skyDeep/70 bg-white/80 px-4 py-2.5 text-sm text-brand-ink outline-none ring-brand-indigo/40 focus:ring-2"
+          className="interactive-input mt-1 w-full resize-none px-4 py-2.5 text-sm outline-none"
         />
         {errors.message && (
           <p id="message-error" className="mt-1 text-xs text-red-600">
@@ -156,7 +162,7 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={status === 'submitting'}
-        className="interactive-btn w-full rounded-full bg-brand-indigo px-6 py-3 text-sm font-semibold text-white hover:bg-brand-indigoDeep disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 disabled:hover:shadow-md"
+        className="interactive-btn w-full rounded-full bg-brand-navy px-6 py-3 text-sm font-semibold text-brand-white hover:bg-brand-navyMid disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 disabled:hover:shadow-md dark:bg-brand-white dark:text-brand-navy dark:hover:bg-brand-sky"
       >
         {status === 'submitting' ? COPY.contact.formSubmitting : COPY.contact.formSubmit}
       </button>

@@ -14,6 +14,7 @@ const APP_DIR = path.join(ROOT, 'app');
 const SOURCES = {
   infinitus: 'infinitus-logo.png',
   rit: 'rit-logo-black.png',
+  ritWhite: 'rit-logo-white-transparent.png',
 };
 
 const INFINITUS_VARIANTS = [
@@ -27,6 +28,12 @@ const RIT_VARIANTS = [
   { name: 'rit-sm', width: 160, quality: 90 },
   { name: 'rit-md', width: 220, quality: 90 },
   { name: 'rit-lg', width: 280, quality: 92 },
+];
+
+const RIT_WHITE_VARIANTS = [
+  { name: 'rit-white-sm', width: 160, quality: 92 },
+  { name: 'rit-white-md', width: 220, quality: 92 },
+  { name: 'rit-white-lg', width: 280, quality: 92 },
 ];
 
 async function ensureDir(dir) {
@@ -49,8 +56,8 @@ async function optimizeSquareLogo(inputPath, variants) {
   }
 }
 
-async function optimizeRitLogo(inputPath) {
-  for (const variant of RIT_VARIANTS) {
+async function optimizeRitLogo(inputPath, variants) {
+  for (const variant of variants) {
     const webpPath = path.join(OUT_DIR, `${variant.name}.webp`);
     await sharp(inputPath)
       .resize({ width: variant.width, withoutEnlargement: true })
@@ -60,6 +67,42 @@ async function optimizeRitLogo(inputPath) {
     const stats = await fs.stat(webpPath);
     console.log(`  ✓ ${path.basename(webpPath)} (${(stats.size / 1024).toFixed(1)} KB)`);
   }
+}
+
+async function ensureTransparentWhiteRit() {
+  const rawWhite = path.join(SOURCE_DIR, 'rit-logo-white.png');
+  const transparentOut = path.join(SOURCE_DIR, SOURCES.ritWhite);
+
+  try {
+    await fs.access(transparentOut);
+    return transparentOut;
+  } catch {
+    // fall through and regenerate
+  }
+
+  try {
+    await fs.access(rawWhite);
+  } catch {
+    return null;
+  }
+
+  const { data, info } = await sharp(rawWhite).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+  const pixels = Buffer.from(data);
+  for (let i = 0; i < pixels.length; i += 4) {
+    if (pixels[i] < 35 && pixels[i + 1] < 35 && pixels[i + 2] < 35) {
+      pixels[i + 3] = 0;
+    }
+  }
+
+  const trimmed = await sharp(pixels, {
+    raw: { width: info.width, height: info.height, channels: 4 },
+  })
+    .trim({ threshold: 8 })
+    .png()
+    .toBuffer();
+
+  await sharp(trimmed).png().toFile(transparentOut);
+  return transparentOut;
 }
 
 async function main() {
@@ -72,8 +115,16 @@ async function main() {
   console.log('Optimizing Infinitus logo…');
   await optimizeSquareLogo(infinitusSrc, INFINITUS_VARIANTS);
 
-  console.log('Optimizing RIT logo…');
-  await optimizeRitLogo(ritSrc);
+  console.log('Optimizing RIT logo (light)…');
+  await optimizeRitLogo(ritSrc, RIT_VARIANTS);
+
+  console.log('Optimizing RIT logo (dark / white)…');
+  const ritWhiteSrc = await ensureTransparentWhiteRit();
+  if (ritWhiteSrc) {
+    await optimizeRitLogo(ritWhiteSrc, RIT_WHITE_VARIANTS);
+  } else {
+    console.log('  ⚠ skipped — place rit-logo-white.png in assets/brand/source');
+  }
 
   const ogPngPath = path.join(OUT_DIR, 'infinitus-og.png');
   await sharp(infinitusSrc)

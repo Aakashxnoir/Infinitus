@@ -26,27 +26,33 @@ export default function EventCard({ event }) {
       <div className="flex items-start justify-between gap-3">
         <span
           className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold ${
-            isUpcoming ? 'bg-brand-amber/15 text-brand-amber' : 'bg-brand-indigo/10 text-brand-indigo'
+            isUpcoming
+              ? 'bg-brand-amber/15 text-brand-amber'
+              : 'bg-brand-navy/10 text-brand-navy dark:bg-brand-white/10 dark:text-brand-white'
           }`}
         >
           {isUpcoming ? 'Upcoming' : 'Past'}
         </span>
         {event.eventType && (
-          <span className="text-xs font-medium uppercase tracking-wide text-brand-ink/40">
+          <span className="text-xs font-medium uppercase tracking-wide text-brand-ink/40 dark:text-brand-white/40">
             {event.eventType}
           </span>
         )}
       </div>
 
-      <h3 className="mt-3 font-heading text-lg font-semibold text-brand-ink">{event.title}</h3>
+      <h3 className="mt-3 font-heading text-lg font-semibold text-brand-navy dark:text-brand-white">
+        {event.title}
+      </h3>
 
-      <p className="mt-1 text-sm text-brand-ink/50">
+      <p className="mt-1 text-sm text-brand-ink/50 dark:text-brand-white/50">
         {formatDate(event.eventDate)}
         {event.venue ? ` · ${event.venue}` : ''}
       </p>
 
       {event.description && (
-        <p className="mt-3 flex-1 text-sm leading-relaxed text-brand-ink/70">{event.description}</p>
+        <p className="mt-3 flex-1 text-sm leading-relaxed text-brand-ink/70 dark:text-brand-white/70">
+          {event.description}
+        </p>
       )}
 
       {formUrl ? (
@@ -54,13 +60,13 @@ export default function EventCard({ event }) {
           href={formUrl}
           target="_blank"
           rel="noreferrer noopener"
-          className="interactive-btn mt-4 inline-flex items-center justify-center gap-2 rounded-full bg-brand-indigo px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand-indigoDeep"
+          className="interactive-btn mt-4 inline-flex items-center justify-center gap-2 rounded-full bg-brand-navy px-4 py-2.5 text-sm font-semibold text-brand-white hover:bg-brand-navyMid dark:bg-brand-white dark:text-brand-navy dark:hover:bg-brand-sky"
         >
           {isUpcoming ? 'View details & register' : 'Open form'}
           <span aria-hidden="true">→</span>
         </a>
       ) : isUpcoming ? (
-        <p className="mt-4 text-xs font-medium text-brand-ink/40">
+        <p className="mt-4 text-xs font-medium text-brand-ink/40 dark:text-brand-white/40">
           Registration form will be posted here soon.
         </p>
       ) : null}

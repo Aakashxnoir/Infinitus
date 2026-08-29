@@ -1,0 +1,110 @@
+# INFINITUS — Member Role Responsibilities
+
+This file is the source of truth for responsibilities shown when a visitor clicks a member card on the INFINITUS website.
+Implemented in code via `lib/roleResponsibilities.js` (keep both in sync when roles change).
+
+## Leadership
+
+### Austin Joshua M — President
+Provides overall leadership and direction for INFINITUS. Oversees the functioning of the club, coordinates with faculty and the executive team, approves major initiatives, represents the club officially, and ensures that club activities and objectives are carried out effectively.
+
+### Sanjay Yuvaraj — Vice President
+Supports the President in managing the club and coordinates with different teams to ensure smooth execution of plans. Follows up on departmental progress, assists in decision-making, and helps maintain effective internal coordination.
+
+### Bala Vishnu K — Secretary
+Maintains official club records, meeting documentation, notices, schedules, approvals, communications, and other administrative documents. Ensures that important club information is properly recorded and organized.
+
+### Kartavyaa — Joint Secretary
+Assists the Secretary and leadership team with administrative activities, documentation, communication, task follow-ups, scheduling, and coordination required for the smooth functioning of the club.
+
+## Event Management
+
+### Josewa Aghai — Event Operation Head
+Manages the operational execution of club events. Coordinates venues, logistics, materials, volunteers, event schedules, and different departments to ensure that events are conducted smoothly and according to plan.
+
+### Jagannathan M — Event Planning Lead
+Develops and structures club events by preparing concepts, event formats, rounds, rules, schedules, judging criteria, scoring methods, and required resources. Coordinates with the event team during the planning stage.
+
+### Sridharshan S — Event Planning Lead
+Supports the planning and development of club events by designing event structures, activities, rules, schedules, participant flow, and operational requirements. Works with the event team to convert ideas into executable event plans.
+
+### C. Samsundar — Event Coordinator
+Coordinates the execution of events and assists with participant management, registration, setup, materials, venue coordination, event flow, and on-ground activities.
+
+### Sree Vishishta — Event Coordinator
+Supports event execution by coordinating participants, event materials, venue arrangements, schedules, and on-ground activities while ensuring that the planned event flow is maintained.
+
+### Yokeshwaran A — Event Committee Member
+Assists the event team with participant guidance, logistics, material distribution, seating, coordination, and other on-ground requirements during club activities.
+
+## Technical Team
+
+### Aakash B K — Technical Head
+Leads the technical aspects of INFINITUS activities and digital systems. Oversees technical planning, online tools, registration systems, scoring systems, digital platforms, and technical readiness for events.
+
+### Chris Alan — Technical Coordinator
+Supports the technical team in managing digital forms, spreadsheets, registration systems, scoring, leaderboards, online tools, event-day technical setup, and troubleshooting.
+
+## Creative & Media
+
+### Abishek S — Creative Director
+Leads the creative direction of INFINITUS and maintains a consistent visual identity across club activities. Guides creative concepts, branding, promotional materials, and visual communication.
+
+### Deepika S — Social Media Manager
+Manages the club's social media presence, including event promotions, announcements, updates, campaigns, posting schedules, and audience engagement.
+
+### Aditya Parthasarathy — Poster Designer Head
+Leads the poster design team and supervises the creation of event posters, banners, promotional graphics, and other visual materials while maintaining consistency with the club's identity.
+
+### Vijay Ragav — Poster Designer
+Creates posters, promotional graphics, event creatives, and other visual materials based on confirmed event information and approved design requirements.
+
+### Akshitha Kannapan — Poster Designer
+Designs posters, promotional creatives, announcements, and supporting graphics for INFINITUS activities while following the club's visual identity and design requirements.
+
+### Dharaneesh V — Video Editor
+Produces and edits promotional videos, reels, event highlights, recap videos, and other video-based content for INFINITUS.
+
+## Photography
+
+### Sam Jebaraj J — Photography Head
+Leads photography coverage for INFINITUS events and activities. Plans coverage, coordinates photographers, ensures important moments are documented, and maintains the quality and organization of event photographs.
+
+### Balachandar — Photographer
+Captures photographs during club events and activities for documentation, promotion, reports, social media, and the club's visual archive.
+
+## Content & Documentation
+
+### NS Lokesh Bharathi — Content Writer
+Creates written content for event promotions, announcements, descriptions, captions, scripts, and other official communication requirements of INFINITUS.
+
+### Abimanue M — Content Writer
+Develops event descriptions, announcements, promotional copy, captions, scripts, and other written content required for club activities and communications.
+
+### Abirami — Report Writing Team
+Prepares and maintains official event reports and documentation, recording event activities, outcomes, participant experiences, and other relevant details for institutional records.
+
+## Innovation & Outreach
+
+### Richella M — Innovation Head
+Develops new and innovative ideas for INFINITUS activities and events. Explores new approaches, mathematical applications, technologies, collaborations, and concepts that can improve the club's activities.
+
+### Sabari Naathan D — PRO
+Handles public relations and external communication for INFINITUS. Coordinates with external organizations, clubs, institutions, guests, and other stakeholders while supporting the club's public image and outreach.
+
+## Volunteers & Logistics
+
+### Tarika Varshini G S — Volunteer Management Head
+Manages the volunteer team by allocating responsibilities, coordinating communication, organizing volunteer support, and ensuring sufficient manpower for club events and activities.
+
+### M.R. Harish — Logistic and Discipline Coordinator
+Coordinates event logistics and supports discipline management during club activities. Helps organize materials, movement, venue requirements, participant coordination, and orderly execution of events.
+
+### Yamuna A — Logistic and Discipline Coordinator
+Supports logistics and discipline management during events by coordinating materials, participant movement, venue arrangements, and on-ground requirements to maintain an organized event environment.
+
+## Finance
+
+### Sandhya — Treasurer
+Manages the financial activities of INFINITUS, including budgeting, expense tracking, financial records, reimbursements, and other approved financial requirements of the club.
+

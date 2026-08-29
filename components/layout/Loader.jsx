@@ -137,11 +137,11 @@ export default function Loader() {
       */}
       <div
         ref={topRef}
-        className="absolute inset-x-0 top-0 z-10 h-[calc(50%+2px)] bg-brand-indigoDeep will-change-transform"
+        className="absolute inset-x-0 top-0 z-10 h-[calc(50%+2px)] bg-brand-navyDeep will-change-transform"
       />
       <div
         ref={bottomRef}
-        className="absolute inset-x-0 bottom-0 z-10 h-[calc(50%+2px)] bg-brand-indigoDeep will-change-transform"
+        className="absolute inset-x-0 bottom-0 z-10 h-[calc(50%+2px)] bg-brand-navyDeep will-change-transform"
       />
 
       <div

@@ -1,6 +1,7 @@
 import { getEvents } from '@/lib/events';
 import { COPY } from '@/lib/site';
 import Reveal from '@/components/ui/Reveal';
+
 export const revalidate = 60;
 
 export default async function GallerySection() {
@@ -12,21 +13,17 @@ export default async function GallerySection() {
   );
 
   return (
-    <section id="gallery" className="scroll-mt-24 bg-white/40 px-6 py-24 sm:px-10">
-      <div className="mx-auto max-w-[1200px]">
+    <section id="gallery" className="section-shell section-pad scroll-mt-24">
+      <div className="section-inner">
         <Reveal className="text-center">
-          <p className="font-heading text-sm uppercase tracking-[0.3em] text-brand-indigo/70">
-            {COPY.gallery.eyebrow}
-          </p>
-          <h2 className="mt-3 font-heading text-3xl font-semibold text-brand-ink sm:text-4xl">
-            {COPY.gallery.heading}
-          </h2>
+          <p className="page-eyebrow">{COPY.gallery.eyebrow}</p>
+          <h2 className="page-heading mt-3">{COPY.gallery.heading}</h2>
         </Reveal>
 
         {photos.length === 0 ? (
-          <p className="mt-8 text-center text-sm text-brand-ink/50">
+          <div className="interactive-card mx-auto mt-8 max-w-md px-5 py-4 text-center text-sm text-brand-ink/60 dark:text-brand-white/60">
             {COPY.gallery.empty}
-          </p>
+          </div>
         ) : (
           <div className="mt-12 columns-1 gap-4 sm:columns-2 lg:columns-3 [&>*]:mb-4">
             {photos.map((photo) => (
@@ -36,7 +33,7 @@ export default async function GallerySection() {
                 src={photo.url}
                 alt={photo.alt}
                 loading="lazy"
-                className="w-full rounded-xl object-cover shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-brand-indigo/15"
+                className="interactive-card w-full object-cover"
               />
             ))}
           </div>

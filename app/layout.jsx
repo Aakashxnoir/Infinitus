@@ -1,6 +1,7 @@
 import { Space_Grotesk, Inter } from 'next/font/google';
 import { INFINITUS_LOGO } from '@/lib/branding';
 import { CLUB_NAME, COLLEGE_NAME, SITE } from '@/lib/site';
+import { ThemeProvider } from '@/components/ui/ThemeProvider';
 import '@/styles/globals.css';
 
 const heading = Space_Grotesk({
@@ -16,6 +17,16 @@ const body = Inter({
   variable: '--font-body',
   display: 'swap',
 });
+
+const themeInitScript = `
+(function () {
+  try {
+    var stored = localStorage.getItem('infinitus-theme');
+    if (stored === 'dark') document.documentElement.classList.add('dark');
+    else document.documentElement.classList.remove('dark');
+  } catch (e) {}
+})();
+`;
 
 export const metadata = {
   metadataBase: new URL(SITE.url),
@@ -70,8 +81,11 @@ export default function RootLayout({ children }) {
       className={`${heading.variable} ${body.variable}`}
       suppressHydrationWarning
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body className="font-body antialiased" suppressHydrationWarning>
-        {children}
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

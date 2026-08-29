@@ -9,20 +9,17 @@ export default async function MembersGrid() {
   const members = await getMembers();
 
   return (
-    <section id="members" className="scroll-mt-24 px-6 py-24 sm:px-10">
-      <div className="mx-auto max-w-[1200px]">
+    <section id="members" className="section-shell section-pad scroll-mt-24">
+      <div className="section-inner">
         <Reveal className="text-center">
-          <p className="font-heading text-sm uppercase tracking-[0.3em] text-brand-indigo/70">
-            {COPY.members.eyebrow}
-          </p>
-          <h2 className="mt-3 font-heading text-3xl font-semibold text-brand-ink sm:text-4xl">
-            {COPY.members.heading}
-          </h2>
+          <p className="page-eyebrow">{COPY.members.eyebrow}</p>
+          <h2 className="page-heading mt-3">{COPY.members.heading}</h2>
+          <p className="page-muted mt-3">Click a member to view their role responsibilities.</p>
         </Reveal>
 
-        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {members.map((member, i) => (
-            <Reveal key={member.id} delay={Math.min(i * 0.05, 0.3)}>
+            <Reveal key={member.id} delay={Math.min(i * 0.03, 0.25)}>
               <MemberCard member={member} />
             </Reveal>
           ))}

@@ -50,7 +50,7 @@ async function seedMembers() {
     role: m.role,
     role_rank: i + 1,
     photo_url: m.photoUrl,
-    bio: m.bio,
+    bio: m.bio || [m.department, m.year].filter(Boolean).join(', ') || null,
     linkedin_url: m.linkedinUrl,
     instagram_url: m.instagramUrl,
   }));
@@ -81,7 +81,7 @@ async function seedEvents() {
 async function main() {
   await seedMembers();
   await seedEvents();
-  console.log('Seed complete. Replace this mock content with real club data before launch.');
+  console.log('Seed complete — official INFINITUS committee data loaded.');
 }
 
 main().catch((err) => {

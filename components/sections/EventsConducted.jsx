@@ -9,13 +9,15 @@ export default async function EventsConducted() {
   return (
     <div>
       <Reveal>
-        <h3 className="font-heading text-xl font-semibold text-brand-ink">
+        <h3 className="page-subheading">
           {COPY.events.conductedHeading}
         </h3>
       </Reveal>
 
       {events.length === 0 ? (
-        <p className="mt-4 text-sm text-brand-ink/50">{COPY.events.conductedEmpty}</p>
+        <div className="interactive-card mt-4 px-5 py-4 text-sm text-brand-ink/60 dark:text-brand-white/60">
+          {COPY.events.conductedEmpty}
+        </div>
       ) : (
         <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {events.map((event, i) => (

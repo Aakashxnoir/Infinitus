@@ -1,40 +1,58 @@
+'use client';
+
 import Image from 'next/image';
 import { RIT_LOGO } from '@/lib/branding';
 import { COLLEGE_NAME } from '@/lib/site';
+import { useTheme } from '@/components/ui/ThemeProvider';
+
 const SIZE_MAP = {
   nav: {
-    src: RIT_LOGO.sm,
+    light: RIT_LOGO.sm,
+    dark: RIT_LOGO.whiteSm,
     width: 100,
     height: 32,
     className: 'h-6 w-auto sm:h-7',
   },
   sm: {
-    src: RIT_LOGO.sm,
+    light: RIT_LOGO.sm,
+    dark: RIT_LOGO.whiteSm,
     width: 120,
     height: 40,
     className: 'h-7 w-auto sm:h-8',
   },
   md: {
-    src: RIT_LOGO.md,
+    light: RIT_LOGO.md,
+    dark: RIT_LOGO.whiteMd,
     width: 160,
     height: 52,
     className: 'h-8 w-auto sm:h-9',
   },
   lg: {
-    src: RIT_LOGO.lg,
+    light: RIT_LOGO.lg,
+    dark: RIT_LOGO.whiteLg,
     width: 220,
     height: 72,
     className: 'h-10 w-auto sm:h-11',
   },
 };
 
+/**
+ * RIT wordmark.
+ * Light surfaces → official color logo.
+ * Dark surfaces → official white logo (no CSS invert).
+ * Pass forceVariant="light"|"dark" to override theme (e.g. always light on a white card).
+ */
 export default function RitLogo({
   size = 'md',
   showName = false,
   interactive = false,
+  forceVariant,
   className = '',
 }) {
+  const { isDark } = useTheme();
   const config = SIZE_MAP[size] ?? SIZE_MAP.md;
+  const useDark = forceVariant ? forceVariant === 'dark' : isDark;
+  const src = useDark ? config.dark : config.light;
 
   return (
     <div
@@ -43,14 +61,18 @@ export default function RitLogo({
       } ${className}`.trim()}
     >
       <Image
-        src={config.src}
+        src={src}
         alt={COLLEGE_NAME}
         width={config.width}
         height={config.height}
         className={`object-contain ${config.className}`}
       />
       {showName && (
-        <p className="max-w-xs text-center text-xs leading-snug text-brand-ink/60 sm:text-sm">
+        <p
+          className={`max-w-xs text-center text-xs leading-snug sm:text-sm ${
+            useDark ? 'text-brand-white/65' : 'text-brand-ink/60'
+          }`}
+        >
           {COLLEGE_NAME}
         </p>
       )}
