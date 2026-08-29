@@ -3,6 +3,11 @@
 This file is the source of truth for responsibilities shown when a visitor clicks a member card on the INFINITUS website.
 Implemented in code via `lib/roleResponsibilities.js` (keep both in sync when roles change).
 
+## Faculty
+
+### Dr A Thilagavathy Vinoth — Faculty Coordinator
+Serves as Faculty Coordinator for INFINITUS. Guides the club as Assistant Professor in the Humanities & Sciences (H & S) department, supports student leadership, advises on academic and institutional requirements, and helps ensure club activities align with college guidelines.
+
 ## Leadership
 
 ### Austin Joshua M — President

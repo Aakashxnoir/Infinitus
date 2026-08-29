@@ -28,6 +28,16 @@ const themeInitScript = `
 })();
 `;
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#FAFBFC' },
+    { media: '(prefers-color-scheme: dark)', color: '#000F2E' },
+  ],
+};
+
 export const metadata = {
   metadataBase: new URL(SITE.url),
   title: {

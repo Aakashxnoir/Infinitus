@@ -11,7 +11,7 @@ const SIZE_MAP = {
     dark: RIT_LOGO.whiteSm,
     width: 100,
     height: 32,
-    className: 'h-6 w-auto sm:h-7',
+    className: 'h-5 w-auto sm:h-6 lg:h-7',
   },
   sm: {
     light: RIT_LOGO.sm,
@@ -19,6 +19,13 @@ const SIZE_MAP = {
     width: 120,
     height: 40,
     className: 'h-7 w-auto sm:h-8',
+  },
+  hero: {
+    light: RIT_LOGO.md,
+    dark: RIT_LOGO.whiteMd,
+    width: 160,
+    height: 52,
+    className: 'h-8 w-auto sm:h-10 md:h-11 lg:h-12',
   },
   md: {
     light: RIT_LOGO.md,

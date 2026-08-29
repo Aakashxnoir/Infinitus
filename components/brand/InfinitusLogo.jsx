@@ -6,7 +6,7 @@ const SIZE_MAP = {
     src: INFINITUS_LOGO.nav,
     width: 40,
     height: 40,
-    className: 'h-9 w-9 sm:h-10 sm:w-10',
+    className: 'h-8 w-8 sm:h-9 sm:w-9 lg:h-10 lg:w-10',
   },
   footer: {
     src: INFINITUS_LOGO.footer,
@@ -18,7 +18,7 @@ const SIZE_MAP = {
     src: INFINITUS_LOGO.hero,
     width: 160,
     height: 160,
-    className: 'h-28 w-28 sm:h-36 sm:w-36',
+    className: 'h-[4.5rem] w-[4.5rem] sm:h-24 sm:w-24 md:h-28 md:w-28 lg:h-32 lg:w-32',
   },
   loader: {
     src: INFINITUS_LOGO.loader,

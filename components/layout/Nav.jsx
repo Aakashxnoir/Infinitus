@@ -19,6 +19,9 @@ const MAIN_NAV = NAV_LINKS.filter((link) => link.navVariant !== 'button');
 const CONTACT_LINK = NAV_LINKS.find((link) => link.id === 'contact');
 const TRACKED_SECTIONS = [...MAIN_NAV.map((l) => l.id), ...(CONTACT_LINK ? ['contact'] : [])];
 
+/** Approx fixed bar height (h-16) + small buffer for safe area / scroll spy. */
+const NAV_OFFSET = 72;
+
 function HomeIcon(props) {
   return (
     <svg viewBox="0 0 24 24" fill="none" strokeWidth="1.75" {...props}>
@@ -121,12 +124,12 @@ function BrandDivider({ isDark }) {
   return (
     <span
       aria-hidden="true"
-      className={`mx-2 h-8 w-px shrink-0 ${isDark ? 'bg-brand-white/25' : 'bg-brand-ink/20'}`}
+      className={`mx-1.5 h-7 w-px shrink-0 sm:mx-2 sm:h-8 ${
+        isDark ? 'bg-brand-white/25' : 'bg-brand-ink/20'
+      }`}
     />
   );
 }
-
-const NAV_OFFSET = 88;
 
 export default function Nav() {
   const [activeId, setActiveId] = useState('home');
@@ -177,126 +180,89 @@ export default function Nav() {
 
   useEffect(() => {
     if (!menuOpen) return undefined;
+
     const handleKeyDown = (event) => {
       if (event.key === 'Escape') setMenuOpen(false);
     };
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
     document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener('keydown', handleKeyDown);
+    };
   }, [menuOpen]);
 
   const contactActive = activeId === 'contact';
+
+  const iconBtnClass = `interactive-icon-btn flex h-11 w-11 shrink-0 items-center justify-center rounded-full ${
+    isDark
+      ? 'text-white hover:bg-white/10'
+      : 'text-black hover:bg-black/5'
+  }`;
 
   const navItemClass = (isActive) =>
     `flex items-center gap-1.5 rounded-full px-3.5 py-2 text-sm font-medium transition-colors ${
       isActive
         ? isDark
-          ? 'bg-brand-white text-brand-navy shadow-sm'
-          : 'bg-brand-sky text-brand-navy shadow-sm'
+          ? 'bg-white text-black shadow-sm'
+          : 'bg-brand-sky text-black shadow-sm'
         : isDark
-          ? 'interactive-nav-item text-brand-white/75 hover:bg-brand-white/10 hover:text-brand-white'
-          : 'interactive-nav-item text-brand-ink/70 hover:bg-brand-sky/70 hover:text-brand-navy'
+          ? 'interactive-nav-item text-white/75 hover:bg-white/10 hover:text-white'
+          : 'interactive-nav-item text-black/70 hover:bg-black/5 hover:text-black'
+    }`;
+
+  const drawerItemClass = (isActive) =>
+    `flex min-h-11 items-center gap-3 rounded-2xl px-4 py-3 text-base font-medium ${
+      isActive
+        ? isDark
+          ? 'bg-white text-black shadow-sm'
+          : 'bg-brand-sky text-black shadow-sm'
+        : isDark
+          ? 'text-white/85 hover:bg-white/10'
+          : 'text-black/85 hover:bg-black/5'
     }`;
 
   return (
-    <header
-      ref={navRef}
-      className={`fixed inset-x-0 top-0 z-40 border-b shadow-sm backdrop-blur-md transition-colors ${
-        isDark
-          ? 'border-brand-white/10 bg-brand-navy/90'
-          : 'border-brand-skyDeep/60 bg-brand-offwhite/85'
-      }`}
-    >
-      <div className="mx-auto flex h-16 max-w-[1180px] items-center justify-between px-4 sm:px-6">
-        <a
-          href={sectionHref('home')}
-          onClick={handleNavClick('home')}
-          className="interactive-logo flex min-w-0 items-center gap-0.5 sm:gap-1"
-          aria-label={COPY.brand.homeAriaLabel}
-        >
-          <InfinitusLogo size="nav" priority />
-          <BrandDivider isDark={isDark} />
-          <RitLogo size="nav" />
-          <span className="sr-only">{COPY.brand.srOnly}</span>
-        </a>
-
-        <nav aria-label="Primary" className="hidden items-center gap-1 md:flex">
-          {MAIN_NAV.map((item) => {
-            const Icon = NAV_ICONS[item.id];
-            const isActive = activeId === item.id;
-            return (
-              <a
-                key={item.id}
-                href={sectionHref(item.id)}
-                onClick={handleNavClick(item.id)}
-                aria-current={isActive ? 'true' : undefined}
-                className={navItemClass(isActive)}
-              >
-                <Icon className="h-4 w-4" />
-                {item.navLabel}
-              </a>
-            );
-          })}
-        </nav>
-
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={toggleTheme}
-            aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-            title={isDark ? 'Light mode' : 'Dark mode'}
-            className={`interactive-icon-btn flex h-10 w-10 items-center justify-center rounded-full ${
-              isDark
-                ? 'text-brand-white hover:bg-brand-white/10'
-                : 'text-brand-navy hover:bg-brand-sky'
-            }`}
-          >
-            {isDark ? <SunIcon className="h-5 w-5" /> : <MoonIcon className="h-5 w-5" />}
-          </button>
-
-          {CONTACT_LINK && (
-            <a
-              href={sectionHref('contact')}
-              onClick={handleNavClick('contact')}
-              aria-current={contactActive ? 'true' : undefined}
-              className={`interactive-btn hidden rounded-full px-5 py-2 text-sm font-semibold sm:inline-block ${
-                isDark
-                  ? 'bg-brand-white text-brand-navy hover:bg-brand-sky'
-                  : 'bg-brand-navy text-brand-white hover:bg-brand-navyMid'
-              }`}
-            >
-              {CONTACT_LINK.navLabel}
-            </a>
-          )}
-
+    <>
+      <header
+        ref={navRef}
+        className={`safe-pt safe-px fixed inset-x-0 top-0 z-40 border-b shadow-sm backdrop-blur-md transition-colors ${
+          isDark
+            ? 'border-brand-white/10 bg-brand-navyDeep/95'
+            : 'border-brand-skyDeep/60 bg-brand-offwhite/85'
+        }`}
+      >
+        <div className="relative mx-auto flex h-16 max-w-[1180px] items-center gap-2 px-3 sm:gap-3 sm:px-6">
+          {/* Mobile / tablet: hamburger top-left */}
           <button
             type="button"
             onClick={() => setMenuOpen((open) => !open)}
             aria-expanded={menuOpen}
-            aria-controls="mobile-nav-menu"
+            aria-controls="mobile-nav-drawer"
             aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-            className={`interactive-icon-btn flex h-10 w-10 items-center justify-center rounded-full md:hidden ${
-              isDark ? 'text-brand-white' : 'text-brand-navy'
-            }`}
+            className={`${iconBtnClass} lg:hidden`}
           >
             {menuOpen ? <CloseIcon className="h-5 w-5" /> : <MenuIcon className="h-5 w-5" />}
           </button>
-        </div>
-      </div>
 
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.nav
-            id="mobile-nav-menu"
-            aria-label="Primary mobile"
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: prefersReducedMotion ? 0 : 0.18, ease: 'easeOut' }}
-            className={`flex flex-col gap-1 border-t px-4 py-3 md:hidden ${
-              isDark
-                ? 'border-brand-white/10 bg-brand-navyDeep'
-                : 'border-brand-skyDeep/60 bg-brand-offwhite'
-            }`}
+          <a
+            href={sectionHref('home')}
+            onClick={handleNavClick('home')}
+            className="interactive-logo flex min-w-0 items-center gap-0 sm:gap-0.5"
+            aria-label={COPY.brand.homeAriaLabel}
+          >
+            <InfinitusLogo size="nav" priority />
+            <BrandDivider isDark={isDark} />
+            <RitLogo size="nav" className="max-w-[88px] sm:max-w-none" />
+            <span className="sr-only">{COPY.brand.srOnly}</span>
+          </a>
+
+          <nav
+            aria-label="Primary"
+            className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 items-center gap-1 lg:flex"
           >
             {MAIN_NAV.map((item) => {
               const Icon = NAV_ICONS[item.id];
@@ -307,38 +273,131 @@ export default function Nav() {
                   href={sectionHref(item.id)}
                   onClick={handleNavClick(item.id)}
                   aria-current={isActive ? 'true' : undefined}
-                  className={`flex items-center gap-2 rounded-full px-3 py-2.5 text-sm font-medium ${
-                    isActive
-                      ? isDark
-                        ? 'bg-brand-white text-brand-navy shadow-sm'
-                        : 'bg-brand-sky text-brand-navy shadow-sm'
-                      : isDark
-                        ? 'text-brand-white/80'
-                        : 'text-brand-ink/80'
-                  }`}
+                  className={navItemClass(isActive)}
                 >
                   <Icon className="h-4 w-4" />
                   {item.navLabel}
                 </a>
               );
             })}
+          </nav>
+
+          <div className="ml-auto flex items-center gap-1.5 sm:gap-2">
+            <button
+              type="button"
+              onClick={toggleTheme}
+              aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+              title={isDark ? 'Light mode' : 'Dark mode'}
+              className={iconBtnClass}
+            >
+              {isDark ? <SunIcon className="h-5 w-5" /> : <MoonIcon className="h-5 w-5" />}
+            </button>
+
             {CONTACT_LINK && (
               <a
                 href={sectionHref('contact')}
                 onClick={handleNavClick('contact')}
                 aria-current={contactActive ? 'true' : undefined}
-                className={`mt-1 rounded-full px-3 py-2.5 text-center text-sm font-semibold ${
+                className={`interactive-btn hidden rounded-full px-5 py-2.5 text-sm font-semibold lg:inline-block ${
                   isDark
-                    ? 'bg-brand-white text-brand-navy'
-                    : 'bg-brand-navy text-brand-white'
+                    ? 'bg-white text-black hover:bg-white/90'
+                    : 'bg-black text-white hover:bg-black/85'
                 }`}
               >
                 {CONTACT_LINK.navLabel}
               </a>
             )}
-          </motion.nav>
+          </div>
+        </div>
+      </header>
+
+      <AnimatePresence>
+        {menuOpen && (
+          <div className="fixed inset-0 z-50 lg:hidden" role="presentation">
+            <motion.button
+              type="button"
+              aria-label="Close menu"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: prefersReducedMotion ? 0 : 0.2 }}
+              className="absolute inset-0 bg-brand-navyDeep/50 backdrop-blur-[2px]"
+              onClick={() => setMenuOpen(false)}
+            />
+
+            <motion.nav
+              id="mobile-nav-drawer"
+              aria-label="Primary mobile"
+              initial={{ x: prefersReducedMotion ? 0 : '-100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: prefersReducedMotion ? 0 : '-100%' }}
+              transition={{ duration: prefersReducedMotion ? 0 : 0.28, ease: [0.22, 1, 0.36, 1] }}
+              className={`safe-pt safe-pb absolute inset-y-0 left-0 flex w-[min(20rem,88vw)] flex-col border-r shadow-lg ${
+                isDark
+                  ? 'border-brand-white/10 bg-brand-navyDeep'
+                  : 'border-brand-skyDeep/60 bg-brand-offwhite'
+              }`}
+            >
+              <div className="flex h-16 items-center justify-between border-b border-brand-skyDeep/40 px-3 dark:border-brand-white/10">
+                <p
+                  className={`font-heading text-sm font-semibold tracking-wide ${
+                    isDark ? 'text-white' : 'text-black'
+                  }`}
+                >
+                  Menu
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setMenuOpen(false)}
+                  aria-label="Close menu"
+                  className={iconBtnClass}
+                >
+                  <CloseIcon className="h-5 w-5" />
+                </button>
+              </div>
+
+              <div className="flex flex-1 flex-col gap-1 overflow-y-auto px-3 py-4">
+                {MAIN_NAV.map((item) => {
+                  const Icon = NAV_ICONS[item.id];
+                  const isActive = activeId === item.id;
+                  return (
+                    <a
+                      key={item.id}
+                      href={sectionHref(item.id)}
+                      onClick={handleNavClick(item.id)}
+                      aria-current={isActive ? 'true' : undefined}
+                      className={drawerItemClass(isActive)}
+                    >
+                      <Icon className="h-5 w-5 shrink-0" />
+                      {item.navLabel}
+                    </a>
+                  );
+                })}
+              </div>
+
+              <div className="mt-auto space-y-4 border-t border-brand-skyDeep/40 px-3 py-4 dark:border-brand-white/10">
+                {CONTACT_LINK && (
+                  <a
+                    href={sectionHref('contact')}
+                    onClick={handleNavClick('contact')}
+                    aria-current={contactActive ? 'true' : undefined}
+                    className={`interactive-btn flex min-h-11 items-center justify-center rounded-full px-4 text-base font-semibold ${
+                      isDark
+                        ? 'bg-white text-black'
+                        : 'bg-black text-white'
+                    }`}
+                  >
+                    {CONTACT_LINK.navLabel}
+                  </a>
+                )}
+                <div className="flex justify-center pb-1">
+                  <RitLogo size="sm" />
+                </div>
+              </div>
+            </motion.nav>
+          </div>
         )}
       </AnimatePresence>
-    </header>
+    </>
   );
 }

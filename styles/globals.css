@@ -23,42 +23,55 @@ html {
 
 body {
   background-color: theme('colors.brand.offwhite');
-  color: theme('colors.brand.ink');
+  color: #000000;
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 html.dark body {
-  background-color: theme('colors.brand.navyDeep');
-  color: theme('colors.brand.white');
+  background-color: theme('colors.brand.navyBody');
+  color: #ffffff;
 }
 
 @layer components {
+  .safe-pt {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+
+  .safe-pb {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .safe-px {
+    padding-left: env(safe-area-inset-left, 0px);
+    padding-right: env(safe-area-inset-right, 0px);
+  }
+
   .page-eyebrow {
-    @apply font-heading text-xs font-semibold uppercase tracking-[0.28em] text-brand-navy/55 dark:text-brand-white/50 sm:text-sm;
+    @apply font-heading text-xs font-semibold uppercase tracking-[0.28em] text-black/55 dark:text-white/55 sm:text-sm;
   }
 
   .page-heading {
-    @apply font-heading text-3xl font-bold tracking-tight text-brand-navy dark:text-brand-white sm:text-4xl lg:text-[2.75rem] lg:leading-tight;
+    @apply font-heading text-[1.75rem] font-bold tracking-tight text-black dark:text-white sm:text-3xl md:text-4xl lg:text-[2.75rem] lg:leading-tight;
   }
 
   .page-subheading {
-    @apply font-heading text-2xl font-semibold tracking-tight text-brand-navy dark:text-brand-white sm:text-3xl;
+    @apply font-heading text-xl font-semibold tracking-tight text-black dark:text-white sm:text-2xl md:text-3xl;
   }
 
   .page-body {
-    @apply text-base leading-relaxed text-brand-ink/70 dark:text-brand-white/70 sm:text-lg sm:leading-8;
+    @apply text-base leading-relaxed text-black/75 dark:text-white/75 sm:text-lg sm:leading-8;
   }
 
   .page-muted {
-    @apply text-sm leading-relaxed text-brand-ink/55 dark:text-brand-white/55;
+    @apply text-sm leading-relaxed text-black/60 dark:text-white/60;
   }
 
   .section-shell {
-    @apply relative overflow-hidden bg-brand-sky dark:bg-brand-navyDeep;
+    @apply relative overflow-hidden bg-brand-sky dark:bg-brand-navyBody;
   }
 
   .section-pad {
-    @apply px-6 py-20 sm:px-8 lg:px-12 lg:py-24;
+    @apply px-4 py-14 sm:px-6 sm:py-16 md:px-8 md:py-20 lg:px-12 lg:py-24;
   }
 
   .section-inner {
@@ -67,10 +80,10 @@ html.dark body {
 
   .interactive-card {
     @apply rounded-card border border-brand-skyDeep/60 bg-white/80 shadow-sm;
-    @apply dark:border-brand-white/10 dark:bg-brand-navy/50;
+    @apply dark:border-brand-white/10 dark:bg-brand-navy/45;
     @apply transition-all duration-300 ease-out;
     @apply hover:-translate-y-1 hover:border-brand-navy/20 hover:bg-white hover:shadow-md;
-    @apply dark:hover:border-brand-white/25 dark:hover:bg-brand-navyMid/60;
+    @apply dark:hover:border-brand-white/25 dark:hover:bg-brand-navyMid/50;
   }
 
   .interactive-btn {
@@ -87,8 +100,8 @@ html.dark body {
 
   .interactive-link {
     @apply transition-all duration-200 ease-out;
-    @apply hover:-translate-y-px hover:text-brand-navyMid;
-    @apply dark:hover:text-brand-cyanGlow;
+    @apply hover:-translate-y-px hover:text-black;
+    @apply dark:hover:text-white;
   }
 
   .interactive-logo {

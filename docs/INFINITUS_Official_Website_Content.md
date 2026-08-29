@@ -31,6 +31,10 @@ INFINITUS provides students with opportunities to strengthen logical reasoning, 
 
 ## Core Committee — 2026–2027
 
+### Faculty
+
+- **Dr A Thilagavathy Vinoth** — Faculty Coordinator — Assistant Professor, H & S
+
 ### Leadership
 
 - **Austin Joshua M** — President — CSE, III Year

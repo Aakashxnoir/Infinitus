@@ -4,6 +4,7 @@ import { useEffect, useId, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
 const LEADERSHIP_ROLES = new Set([
+  'Faculty Coordinator',
   'President',
   'Vice President',
   'Secretary',
@@ -118,7 +119,7 @@ function MemberDetailModal({ member, open, onClose, titleId }) {
               type="button"
               onClick={onClose}
               aria-label="Close"
-              className="interactive-icon-btn absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full text-brand-navy/60"
+              className="interactive-icon-btn absolute right-3 top-3 flex h-11 w-11 items-center justify-center rounded-full text-black/60"
             >
               <CloseIcon className="h-5 w-5" />
             </button>
@@ -129,30 +130,30 @@ function MemberDetailModal({ member, open, onClose, titleId }) {
               </div>
 
               <div className="mt-4 sm:ml-5 sm:mt-0 sm:flex-1">
-                <h3 id={titleId} className="font-heading text-xl font-semibold text-brand-navy dark:text-brand-navy">
+                <h3 id={titleId} className="font-heading text-xl font-semibold text-black">
                   {member.name}
                 </h3>
                 <p
                   className={`mt-1 text-sm font-semibold ${
-                    isLeadership ? 'text-brand-amber' : 'text-brand-navy/70'
+                    isLeadership ? 'text-brand-amber' : 'text-black/70'
                   }`}
                 >
                   {member.role}
                 </p>
                 {member.team && (
-                  <p className="mt-1 text-xs font-medium uppercase tracking-[0.18em] text-brand-navy/55">
+                  <p className="mt-1 text-xs font-medium uppercase tracking-[0.18em] text-black/55">
                     {member.team}
                   </p>
                 )}
-                {meta && <p className="mt-1 text-xs text-brand-ink/45">{meta}</p>}
+                {meta && <p className="mt-1 text-xs text-black/45">{meta}</p>}
               </div>
             </div>
 
             <div className="mt-6 border-t border-brand-skyDeep/40 pt-5">
-              <p className="font-heading text-xs font-semibold uppercase tracking-[0.2em] text-brand-navy/50">
+              <p className="font-heading text-xs font-semibold uppercase tracking-[0.2em] text-black/50">
                 Role responsibilities
               </p>
-              <p className="mt-3 text-sm leading-relaxed text-brand-ink/75">
+              <p className="mt-3 text-sm leading-relaxed text-black/75">
                 {member.responsibilities ||
                   'Role responsibilities for this member will be published soon.'}
               </p>
@@ -166,7 +167,7 @@ function MemberDetailModal({ member, open, onClose, titleId }) {
                     target="_blank"
                     rel="noreferrer noopener"
                     aria-label={`${member.name} on LinkedIn`}
-                    className="interactive-link rounded-full p-1 text-brand-ink/50 hover:text-brand-navy"
+                    className="interactive-link flex h-11 w-11 items-center justify-center rounded-full text-black/50 hover:text-black"
                   >
                     <LinkedinIcon className="h-5 w-5" />
                   </a>
@@ -177,7 +178,7 @@ function MemberDetailModal({ member, open, onClose, titleId }) {
                     target="_blank"
                     rel="noreferrer noopener"
                     aria-label={`${member.name} on Instagram`}
-                    className="interactive-link rounded-full p-1 text-brand-ink/50 hover:text-brand-navy"
+                    className="interactive-link flex h-11 w-11 items-center justify-center rounded-full text-black/50 hover:text-black"
                   >
                     <InstagramIcon className="h-5 w-5" />
                   </a>
@@ -205,29 +206,29 @@ export default function MemberCard({ member }) {
         whileHover={{ y: -8, scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         transition={{ duration: 0.25, ease: 'easeOut' }}
-        className="interactive-card group w-full cursor-pointer p-5 text-center"
+        className="interactive-card group w-full cursor-pointer p-3 text-center sm:p-4 md:p-5"
         aria-haspopup="dialog"
         aria-expanded={open}
       >
-        <div className="mx-auto h-24 w-24 overflow-hidden rounded-full ring-2 ring-brand-skyDeep/50 transition-all duration-300 group-hover:ring-brand-navy/30">
+        <div className="mx-auto h-16 w-16 overflow-hidden rounded-full ring-2 ring-brand-skyDeep/50 transition-all duration-300 group-hover:ring-brand-navy/30 sm:h-20 sm:w-20 md:h-24 md:w-24">
           <Avatar name={member.name} photoUrl={member.photoUrl} />
         </div>
 
-        <h3 className="mt-4 font-heading text-base font-semibold text-brand-navy dark:text-brand-white">
+        <h3 className="mt-3 font-heading text-sm font-semibold leading-snug text-black dark:text-white sm:mt-4 sm:text-base">
           {member.name}
         </h3>
 
         <p
-          className={`mt-1 text-sm font-medium ${
-            isLeadership ? 'text-brand-amber' : 'text-brand-ink/60 dark:text-brand-white/60'
+          className={`mt-1 text-xs font-medium leading-snug sm:text-sm ${
+            isLeadership ? 'text-brand-amber' : 'text-black/65 dark:text-white/65'
           }`}
         >
           {member.role}
         </p>
 
-        {meta && <p className="mt-1 text-xs text-brand-ink/45 dark:text-brand-white/45">{meta}</p>}
+        {meta && <p className="mt-1 text-[11px] text-black/50 dark:text-white/50 sm:text-xs">{meta}</p>}
 
-        <p className="mt-3 text-[11px] font-medium uppercase tracking-[0.16em] text-brand-navy/45 dark:text-brand-white/45">
+        <p className="mt-2 text-[10px] font-medium uppercase tracking-[0.14em] text-black/45 dark:text-white/45 sm:mt-3 sm:text-[11px] sm:tracking-[0.16em]">
           View role
         </p>
       </motion.button>

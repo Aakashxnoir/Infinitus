@@ -9,21 +9,25 @@ module.exports = {
     extend: {
       colors: {
         brand: {
-          // Logo navy + light sky (light mode surfaces / dark mode chrome)
-          navy: '#001B48',
-          navyDeep: '#000F2E',
-          navyMid: '#002060',
-          indigo: '#002060',
-          indigoDeep: '#001538',
-          white: '#FFFFFF',
-          cloud: '#F4FAFF',
+          // Light surfaces (previous light UI)
           sky: '#EAF4FF',
           skyDeep: '#CFE6FB',
+          offwhite: '#FAFBFC',
+          cloud: '#F4FAFF',
+          // Dark chrome (header / footer / loader curtain)
+          navyDeep: '#000F2E',
+          // Dark body surface — lighter than chrome for separation
+          navyBody: '#0A274F',
+          navy: '#001B48',
+          navyMid: '#002060',
+          // Previous-commit light curtain + accents
+          indigo: '#2B3593',
+          indigoDeep: '#1D2566',
+          white: '#FFFFFF',
           cyan: '#4DB8E8',
           cyanGlow: '#86D8FB',
           amber: '#F0C14D',
           ink: '#1A1D2E',
-          offwhite: '#FAFBFC',
         },
       },
       fontFamily: {

@@ -6,36 +6,28 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative overflow-hidden border-t border-brand-skyDeep/60 bg-brand-offwhite px-6 py-12 sm:px-10 dark:border-brand-white/10 dark:bg-brand-navy">
-      <div className="section-inner flex flex-col items-center gap-8">
-        <div className="flex flex-col items-center gap-6 sm:flex-row sm:justify-center sm:gap-10">
-          <div className="flex flex-col items-center gap-2">
-            <InfinitusLogo size="footer" interactive />
-            <p className="text-xs font-medium uppercase tracking-[0.2em] text-brand-ink/50 dark:text-brand-white/60">
-              {COPY.footer.clubLine}
-            </p>
-          </div>
-
+    <footer className="safe-pb relative overflow-hidden border-t border-brand-skyDeep/60 bg-brand-offwhite px-4 py-6 sm:px-8 dark:border-brand-white/10 dark:bg-brand-navyDeep">
+      <div className="section-inner flex flex-col items-center gap-4 sm:flex-row sm:justify-between sm:gap-4">
+        <div className="flex items-center gap-3 sm:gap-4">
+          <InfinitusLogo size="nav" interactive />
           <div
-            className="hidden h-16 w-px bg-brand-skyDeep/80 dark:bg-brand-white/20 sm:block"
+            className="h-8 w-px bg-brand-skyDeep/80 dark:bg-brand-white/20"
             aria-hidden="true"
           />
-
-          <RitLogo size="md" interactive />
+          <RitLogo size="nav" interactive />
         </div>
 
-        <p className="text-sm text-brand-ink/60 dark:text-brand-white/70">
+        <div className="flex flex-col items-center gap-1 text-center sm:items-end sm:text-right">
           <a
             href={`mailto:${SITE.contactEmail}`}
-            className="interactive-link text-brand-ink/60 hover:text-brand-navy dark:text-brand-white/80 dark:hover:text-brand-white"
+            className="interactive-link inline-flex min-h-11 items-center px-2 text-sm text-black/65 hover:text-black dark:text-white/70 dark:hover:text-white"
           >
             {SITE.contactEmail}
           </a>
-        </p>
-
-        <p className="text-xs text-brand-ink/40 dark:text-brand-white/40">
-          {COPY.footer.copyright(year)}
-        </p>
+          <p className="text-[11px] text-black/45 dark:text-white/45 sm:text-xs">
+            {COPY.footer.copyright(year)}
+          </p>
+        </div>
       </div>
     </footer>
   );

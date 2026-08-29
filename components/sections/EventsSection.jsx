@@ -7,7 +7,7 @@ export const revalidate = 60;
 
 export default function EventsSection() {
   return (
-    <section id="events" className="section-shell section-pad scroll-mt-24">
+    <section id="events" className="section-shell section-pad scroll-mt-20">
       <div className="section-inner">
         <Reveal className="text-center">
           <p className="page-eyebrow">{COPY.events.eyebrow}</p>

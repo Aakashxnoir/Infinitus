@@ -13,7 +13,7 @@ export default async function GallerySection() {
   );
 
   return (
-    <section id="gallery" className="section-shell section-pad scroll-mt-24">
+    <section id="gallery" className="section-shell section-pad scroll-mt-20">
       <div className="section-inner">
         <Reveal className="text-center">
           <p className="page-eyebrow">{COPY.gallery.eyebrow}</p>
@@ -21,11 +21,11 @@ export default async function GallerySection() {
         </Reveal>
 
         {photos.length === 0 ? (
-          <div className="interactive-card mx-auto mt-8 max-w-md px-5 py-4 text-center text-sm text-brand-ink/60 dark:text-brand-white/60">
+          <div className="interactive-card mx-auto mt-8 max-w-md px-5 py-4 text-center text-sm text-black/65 dark:text-white/65">
             {COPY.gallery.empty}
           </div>
         ) : (
-          <div className="mt-12 columns-1 gap-4 sm:columns-2 lg:columns-3 [&>*]:mb-4">
+          <div className="mt-10 columns-1 gap-4 sm:mt-12 sm:columns-2 md:columns-3 [&>*]:mb-4">
             {photos.map((photo) => (
               // eslint-disable-next-line @next/next/no-img-element
               <img

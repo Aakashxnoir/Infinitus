@@ -28,29 +28,29 @@ export default function EventCard({ event }) {
           className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold ${
             isUpcoming
               ? 'bg-brand-amber/15 text-brand-amber'
-              : 'bg-brand-navy/10 text-brand-navy dark:bg-brand-white/10 dark:text-brand-white'
+              : 'bg-black/10 text-black dark:bg-white/10 dark:text-white'
           }`}
         >
           {isUpcoming ? 'Upcoming' : 'Past'}
         </span>
         {event.eventType && (
-          <span className="text-xs font-medium uppercase tracking-wide text-brand-ink/40 dark:text-brand-white/40">
+          <span className="text-xs font-medium uppercase tracking-wide text-black/45 dark:text-white/45">
             {event.eventType}
           </span>
         )}
       </div>
 
-      <h3 className="mt-3 font-heading text-lg font-semibold text-brand-navy dark:text-brand-white">
+      <h3 className="mt-3 font-heading text-lg font-semibold text-black dark:text-white">
         {event.title}
       </h3>
 
-      <p className="mt-1 text-sm text-brand-ink/50 dark:text-brand-white/50">
+      <p className="mt-1 text-sm text-black/55 dark:text-white/55">
         {formatDate(event.eventDate)}
         {event.venue ? ` · ${event.venue}` : ''}
       </p>
 
       {event.description && (
-        <p className="mt-3 flex-1 text-sm leading-relaxed text-brand-ink/70 dark:text-brand-white/70">
+        <p className="mt-3 flex-1 text-sm leading-relaxed text-black/70 dark:text-white/70">
           {event.description}
         </p>
       )}
@@ -66,7 +66,7 @@ export default function EventCard({ event }) {
           <span aria-hidden="true">→</span>
         </a>
       ) : isUpcoming ? (
-        <p className="mt-4 text-xs font-medium text-brand-ink/40 dark:text-brand-white/40">
+        <p className="mt-4 text-xs font-medium text-black/45 dark:text-white/45">
           Registration form will be posted here soon.
         </p>
       ) : null}
