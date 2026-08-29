@@ -63,7 +63,7 @@ function Avatar({ name, photoUrl }) {
   return (
     <div
       aria-hidden="true"
-      className="flex h-full w-full items-center justify-center bg-brand-sky font-heading text-2xl font-semibold text-brand-navy dark:bg-brand-navyMid dark:text-brand-white"
+      className="flex h-full w-full items-center justify-center bg-brand-sky font-heading text-xl font-semibold text-black dark:bg-brand-navyMid dark:text-white sm:text-2xl"
     >
       {initials}
     </div>
@@ -113,47 +113,47 @@ function MemberDetailModal({ member, open, onClose, titleId }) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 12, scale: 0.97 }}
             transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="relative z-10 w-full max-w-lg rounded-card border border-brand-skyDeep/50 bg-brand-white p-6 shadow-md sm:p-8"
+            className="relative z-10 w-full max-w-lg rounded-card border border-brand-skyDeep/50 bg-white p-6 shadow-md dark:border-white/10 dark:bg-brand-navy sm:p-8"
           >
             <button
               type="button"
               onClick={onClose}
               aria-label="Close"
-              className="interactive-icon-btn absolute right-3 top-3 flex h-11 w-11 items-center justify-center rounded-full text-black/60"
+              className="interactive-icon-btn absolute right-3 top-3 flex h-11 w-11 items-center justify-center rounded-full text-black/60 hover:bg-black/5 dark:text-white/60 dark:hover:bg-white/10"
             >
               <CloseIcon className="h-5 w-5" />
             </button>
 
             <div className="flex flex-col items-center text-center sm:flex-row sm:items-start sm:text-left">
-              <div className="h-20 w-20 shrink-0 overflow-hidden rounded-full ring-2 ring-brand-skyDeep/60 sm:h-24 sm:w-24">
+              <div className="h-20 w-20 shrink-0 overflow-hidden rounded-full ring-2 ring-brand-skyDeep/60 dark:ring-white/15 sm:h-24 sm:w-24">
                 <Avatar name={member.name} photoUrl={member.photoUrl} />
               </div>
 
               <div className="mt-4 sm:ml-5 sm:mt-0 sm:flex-1">
-                <h3 id={titleId} className="font-heading text-xl font-semibold text-black">
+                <h3 id={titleId} className="font-heading text-xl font-semibold text-black dark:text-white">
                   {member.name}
                 </h3>
                 <p
                   className={`mt-1 text-sm font-semibold ${
-                    isLeadership ? 'text-brand-amber' : 'text-black/70'
+                    isLeadership ? 'text-brand-amber' : 'text-black/70 dark:text-white/70'
                   }`}
                 >
                   {member.role}
                 </p>
                 {member.team && (
-                  <p className="mt-1 text-xs font-medium uppercase tracking-[0.18em] text-black/55">
+                  <p className="mt-1 text-xs font-medium uppercase tracking-[0.18em] text-black/55 dark:text-white/55">
                     {member.team}
                   </p>
                 )}
-                {meta && <p className="mt-1 text-xs text-black/45">{meta}</p>}
+                {meta && <p className="mt-1 text-xs text-black/45 dark:text-white/45">{meta}</p>}
               </div>
             </div>
 
-            <div className="mt-6 border-t border-brand-skyDeep/40 pt-5">
-              <p className="font-heading text-xs font-semibold uppercase tracking-[0.2em] text-black/50">
+            <div className="mt-6 border-t border-brand-skyDeep/40 pt-5 dark:border-white/10">
+              <p className="font-heading text-xs font-semibold uppercase tracking-[0.2em] text-black/50 dark:text-white/50">
                 Role responsibilities
               </p>
-              <p className="mt-3 text-sm leading-relaxed text-black/75">
+              <p className="mt-3 text-sm leading-relaxed text-black/75 dark:text-white/75">
                 {member.responsibilities ||
                   'Role responsibilities for this member will be published soon.'}
               </p>
@@ -167,7 +167,7 @@ function MemberDetailModal({ member, open, onClose, titleId }) {
                     target="_blank"
                     rel="noreferrer noopener"
                     aria-label={`${member.name} on LinkedIn`}
-                    className="interactive-link flex h-11 w-11 items-center justify-center rounded-full text-black/50 hover:text-black"
+                    className="interactive-link flex h-11 w-11 items-center justify-center rounded-full text-black/50 hover:text-black dark:text-white/50 dark:hover:text-white"
                   >
                     <LinkedinIcon className="h-5 w-5" />
                   </a>
@@ -178,7 +178,7 @@ function MemberDetailModal({ member, open, onClose, titleId }) {
                     target="_blank"
                     rel="noreferrer noopener"
                     aria-label={`${member.name} on Instagram`}
-                    className="interactive-link flex h-11 w-11 items-center justify-center rounded-full text-black/50 hover:text-black"
+                    className="interactive-link flex h-11 w-11 items-center justify-center rounded-full text-black/50 hover:text-black dark:text-white/50 dark:hover:text-white"
                   >
                     <InstagramIcon className="h-5 w-5" />
                   </a>
@@ -210,7 +210,7 @@ export default function MemberCard({ member }) {
         aria-haspopup="dialog"
         aria-expanded={open}
       >
-        <div className="mx-auto h-16 w-16 overflow-hidden rounded-full ring-2 ring-brand-skyDeep/50 transition-all duration-300 group-hover:ring-brand-navy/30 sm:h-20 sm:w-20 md:h-24 md:w-24">
+        <div className="mx-auto h-16 w-16 overflow-hidden rounded-full ring-2 ring-brand-skyDeep/50 transition-all duration-300 group-hover:ring-black/25 dark:ring-white/15 dark:group-hover:ring-white/35 sm:h-20 sm:w-20 md:h-24 md:w-24">
           <Avatar name={member.name} photoUrl={member.photoUrl} />
         </div>
 

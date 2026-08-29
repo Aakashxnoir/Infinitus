@@ -14,19 +14,27 @@ export function ThemeProvider({ children }) {
   const [theme, setThemeState] = useState('light');
   const [ready, setReady] = useState(false);
 
-  useEffect(() => {
-    const stored = window.localStorage.getItem(STORAGE_KEY);
-    const next = stored === 'dark' || stored === 'light' ? stored : 'light';
-    setThemeState(next);
-    document.documentElement.classList.toggle('dark', next === 'dark');
-    setReady(true);
-  }, []);
-
   const setTheme = useCallback((next) => {
     const value = next === 'dark' ? 'dark' : 'light';
     setThemeState(value);
     document.documentElement.classList.toggle('dark', value === 'dark');
     window.localStorage.setItem(STORAGE_KEY, value);
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) {
+      meta.setAttribute('content', value === 'dark' ? '#000F2E' : '#FAFBFC');
+    }
+  }, []);
+
+  useEffect(() => {
+    const stored = window.localStorage.getItem(STORAGE_KEY);
+    const next = stored === 'dark' || stored === 'light' ? stored : 'light';
+    setThemeState(next);
+    document.documentElement.classList.toggle('dark', next === 'dark');
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) {
+      meta.setAttribute('content', next === 'dark' ? '#000F2E' : '#FAFBFC');
+    }
+    setReady(true);
   }, []);
 
   const toggleTheme = useCallback(() => {

@@ -55,7 +55,7 @@ export default function ContactGoogleForm() {
         href={rawUrl}
         target="_blank"
         rel="noreferrer noopener"
-        className="interactive-btn mt-6 inline-flex min-h-11 items-center gap-2 rounded-full bg-brand-navy px-6 py-3 text-sm font-semibold text-brand-white hover:bg-brand-navyMid dark:bg-brand-white dark:text-brand-navy dark:hover:bg-brand-sky"
+        className="interactive-btn cta-solid mt-6 inline-flex min-h-11 items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold"
       >
         {COPY.contact.formCta}
         <span aria-hidden="true">→</span>
@@ -65,7 +65,7 @@ export default function ContactGoogleForm() {
         <iframe
           title={COPY.contact.formTitle}
           src={embedUrl}
-          className="mt-8 hidden h-[min(70dvh,480px)] w-full rounded-2xl border-0 bg-brand-white md:block md:h-[560px] lg:h-[640px]"
+          className="mt-8 hidden h-[min(70dvh,480px)] w-full rounded-2xl border-0 bg-white ring-1 ring-black/5 dark:ring-white/10 md:block md:h-[560px] lg:h-[640px]"
           loading="lazy"
         />
       )}

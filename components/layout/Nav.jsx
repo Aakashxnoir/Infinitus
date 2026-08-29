@@ -120,15 +120,8 @@ function MoonIcon(props) {
   );
 }
 
-function BrandDivider({ isDark }) {
-  return (
-    <span
-      aria-hidden="true"
-      className={`mx-1.5 h-7 w-px shrink-0 sm:mx-2 sm:h-8 ${
-        isDark ? 'bg-brand-white/25' : 'bg-brand-ink/20'
-      }`}
-    />
-  );
+function BrandDivider() {
+  return <span aria-hidden="true" className="brand-divider mx-1.5 h-7 sm:mx-2 sm:h-8" />;
 }
 
 export default function Nav() {
@@ -208,7 +201,7 @@ export default function Nav() {
       isActive
         ? isDark
           ? 'bg-white text-black shadow-sm'
-          : 'bg-brand-sky text-black shadow-sm'
+          : 'bg-black text-white shadow-sm'
         : isDark
           ? 'interactive-nav-item text-white/75 hover:bg-white/10 hover:text-white'
           : 'interactive-nav-item text-black/70 hover:bg-black/5 hover:text-black'
@@ -219,7 +212,7 @@ export default function Nav() {
       isActive
         ? isDark
           ? 'bg-white text-black shadow-sm'
-          : 'bg-brand-sky text-black shadow-sm'
+          : 'bg-black text-white shadow-sm'
         : isDark
           ? 'text-white/85 hover:bg-white/10'
           : 'text-black/85 hover:bg-black/5'
@@ -231,7 +224,7 @@ export default function Nav() {
         ref={navRef}
         className={`safe-pt safe-px fixed inset-x-0 top-0 z-40 border-b shadow-sm backdrop-blur-md transition-colors ${
           isDark
-            ? 'border-brand-white/10 bg-brand-navyDeep/95'
+            ? 'border-white/10 bg-brand-navyDeep/95'
             : 'border-brand-skyDeep/60 bg-brand-offwhite/85'
         }`}
       >
@@ -255,7 +248,7 @@ export default function Nav() {
             aria-label={COPY.brand.homeAriaLabel}
           >
             <InfinitusLogo size="nav" priority />
-            <BrandDivider isDark={isDark} />
+            <BrandDivider />
             <RitLogo size="nav" className="max-w-[88px] sm:max-w-none" />
             <span className="sr-only">{COPY.brand.srOnly}</span>
           </a>
@@ -298,11 +291,7 @@ export default function Nav() {
                 href={sectionHref('contact')}
                 onClick={handleNavClick('contact')}
                 aria-current={contactActive ? 'true' : undefined}
-                className={`interactive-btn hidden rounded-full px-5 py-2.5 text-sm font-semibold lg:inline-block ${
-                  isDark
-                    ? 'bg-white text-black hover:bg-white/90'
-                    : 'bg-black text-white hover:bg-black/85'
-                }`}
+                className="interactive-btn cta-solid hidden rounded-full px-5 py-2.5 text-sm font-semibold lg:inline-block"
               >
                 {CONTACT_LINK.navLabel}
               </a>
@@ -334,11 +323,11 @@ export default function Nav() {
               transition={{ duration: prefersReducedMotion ? 0 : 0.28, ease: [0.22, 1, 0.36, 1] }}
               className={`safe-pt safe-pb absolute inset-y-0 left-0 flex w-[min(20rem,88vw)] flex-col border-r shadow-lg ${
                 isDark
-                  ? 'border-brand-white/10 bg-brand-navyDeep'
+                  ? 'border-white/10 bg-brand-navyDeep'
                   : 'border-brand-skyDeep/60 bg-brand-offwhite'
               }`}
             >
-              <div className="flex h-16 items-center justify-between border-b border-brand-skyDeep/40 px-3 dark:border-brand-white/10">
+              <div className="flex h-16 items-center justify-between border-b border-brand-skyDeep/40 px-3 dark:border-white/10">
                 <p
                   className={`font-heading text-sm font-semibold tracking-wide ${
                     isDark ? 'text-white' : 'text-black'
@@ -375,17 +364,13 @@ export default function Nav() {
                 })}
               </div>
 
-              <div className="mt-auto space-y-4 border-t border-brand-skyDeep/40 px-3 py-4 dark:border-brand-white/10">
+              <div className="mt-auto space-y-4 border-t border-brand-skyDeep/40 px-3 py-4 dark:border-white/10">
                 {CONTACT_LINK && (
                   <a
                     href={sectionHref('contact')}
                     onClick={handleNavClick('contact')}
                     aria-current={contactActive ? 'true' : undefined}
-                    className={`interactive-btn flex min-h-11 items-center justify-center rounded-full px-4 text-base font-semibold ${
-                      isDark
-                        ? 'bg-white text-black'
-                        : 'bg-black text-white'
-                    }`}
+                    className="interactive-btn cta-solid flex min-h-11 items-center justify-center rounded-full px-4 text-base font-semibold"
                   >
                     {CONTACT_LINK.navLabel}
                   </a>

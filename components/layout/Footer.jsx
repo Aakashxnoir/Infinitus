@@ -6,12 +6,12 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="safe-pb relative overflow-hidden border-t border-brand-skyDeep/60 bg-brand-offwhite px-4 py-6 sm:px-8 dark:border-brand-white/10 dark:bg-brand-navyDeep">
+    <footer className="safe-pb relative overflow-hidden border-t border-brand-skyDeep/60 bg-brand-offwhite px-4 py-6 sm:px-8 dark:border-white/10 dark:bg-brand-navyDeep">
       <div className="section-inner flex flex-col items-center gap-4 sm:flex-row sm:justify-between sm:gap-4">
         <div className="flex items-center gap-3 sm:gap-4">
           <InfinitusLogo size="nav" interactive />
           <div
-            className="h-8 w-px bg-brand-skyDeep/80 dark:bg-brand-white/20"
+            className="brand-divider h-8"
             aria-hidden="true"
           />
           <RitLogo size="nav" interactive />

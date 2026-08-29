@@ -77,7 +77,7 @@ export default function RitLogo({
       {showName && (
         <p
           className={`max-w-xs text-center text-xs leading-snug sm:text-sm ${
-            useDark ? 'text-brand-white/65' : 'text-brand-ink/60'
+            useDark ? 'text-white/65' : 'text-black/60'
           }`}
         >
           {COLLEGE_NAME}

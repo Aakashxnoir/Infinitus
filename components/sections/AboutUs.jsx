@@ -6,7 +6,7 @@ export default function AboutUs() {
     <section id="about" className="section-shell section-pad scroll-mt-20">
       <div className="section-inner">
         <Reveal>
-          <div className="border-b border-brand-skyDeep/50 pb-10 dark:border-brand-white/10 lg:pb-12">
+          <div className="border-b border-brand-skyDeep/50 pb-10 dark:border-white/10 lg:pb-12">
             <p className="page-eyebrow">{COPY.about.eyebrow}</p>
             <h2 className="page-heading mt-3">{COPY.about.heading}</h2>
           </div>
@@ -40,7 +40,7 @@ export default function AboutUs() {
             {COPY.about.activities.map((item, index) => (
               <li
                 key={item}
-                className="flex min-h-[4.5rem] items-start gap-3 rounded-2xl border border-brand-skyDeep/40 bg-brand-white/55 px-4 py-4 dark:border-brand-white/10 dark:bg-brand-navy/35 sm:px-5"
+                className="flex min-h-[4.5rem] items-start gap-3 rounded-2xl border border-brand-skyDeep/50 bg-white/80 px-4 py-4 dark:border-white/10 dark:bg-brand-navy/45 sm:px-5"
               >
                 <span
                   aria-hidden="true"
@@ -57,14 +57,14 @@ export default function AboutUs() {
         </Reveal>
 
         <Reveal delay={0.14} className="mt-14 lg:mt-16">
-          <div className="grid gap-6 rounded-card border border-brand-skyDeep/45 bg-brand-white/70 p-5 dark:border-brand-white/10 dark:bg-brand-navy/40 sm:p-8 md:grid-cols-[200px_1fr] md:gap-10 lg:grid-cols-[220px_1fr] lg:gap-12 lg:p-10">
+          <div className="surface-panel grid gap-6 p-5 sm:p-8 md:grid-cols-[200px_1fr] md:gap-10 lg:grid-cols-[220px_1fr] lg:gap-12 lg:p-10">
             <div>
               <p className="page-eyebrow">{COPY.about.focusEyebrow}</p>
               <h3 className="mt-2 font-heading text-2xl font-semibold tracking-tight text-black dark:text-white">
                 {COPY.about.focusHeading}
               </h3>
             </div>
-            <p className="text-base leading-relaxed text-black/70 dark:text-white/70 sm:text-lg sm:leading-8 md:border-l md:border-brand-skyDeep/50 md:pl-8 lg:pl-10 dark:md:border-brand-white/15">
+            <p className="text-base leading-relaxed text-black/70 dark:text-white/70 sm:text-lg sm:leading-8 md:border-l md:border-brand-skyDeep/50 md:pl-8 lg:pl-10 dark:md:border-white/15">
               {COPY.about.focus}
             </p>
           </div>

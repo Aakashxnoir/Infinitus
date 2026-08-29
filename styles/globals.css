@@ -80,10 +80,10 @@ html.dark body {
 
   .interactive-card {
     @apply rounded-card border border-brand-skyDeep/60 bg-white/80 shadow-sm;
-    @apply dark:border-brand-white/10 dark:bg-brand-navy/45;
+    @apply dark:border-white/10 dark:bg-brand-navy/45;
     @apply transition-all duration-300 ease-out;
-    @apply hover:-translate-y-1 hover:border-brand-navy/20 hover:bg-white hover:shadow-md;
-    @apply dark:hover:border-brand-white/25 dark:hover:bg-brand-navyMid/50;
+    @apply hover:-translate-y-1 hover:border-black/20 hover:bg-white hover:shadow-md;
+    @apply dark:hover:border-white/25 dark:hover:bg-brand-navyMid/50;
   }
 
   .interactive-btn {
@@ -92,10 +92,16 @@ html.dark body {
     @apply active:translate-y-0 active:shadow-sm;
   }
 
+  /* Shared primary CTA — black on light, white on dark */
+  .cta-solid {
+    @apply bg-black text-white hover:bg-black/85;
+    @apply dark:bg-white dark:text-black dark:hover:bg-white/90;
+  }
+
   .interactive-btn-ghost {
     @apply transition-all duration-200 ease-out;
-    @apply hover:-translate-y-0.5 hover:bg-brand-sky/80 hover:shadow-sm;
-    @apply dark:hover:bg-brand-white/10;
+    @apply hover:-translate-y-0.5 hover:bg-black/5 hover:shadow-sm;
+    @apply dark:hover:bg-white/10;
   }
 
   .interactive-link {
@@ -116,11 +122,11 @@ html.dark body {
 
   .interactive-input {
     @apply rounded-2xl shadow-sm transition-all duration-200 ease-out;
-    @apply border border-brand-skyDeep/70 bg-white/90 text-brand-navy;
-    @apply dark:border-brand-white/15 dark:bg-brand-navy/40 dark:text-brand-white;
-    @apply hover:border-brand-navy/30 dark:hover:border-brand-white/30;
-    @apply focus:-translate-y-px focus:border-brand-navy/40 focus:ring-2 focus:ring-brand-navy/20;
-    @apply dark:focus:border-brand-cyan/40 dark:focus:ring-brand-cyan/20;
+    @apply border border-brand-skyDeep/70 bg-white/90 text-black;
+    @apply dark:border-white/15 dark:bg-brand-navy/40 dark:text-white;
+    @apply hover:border-black/30 dark:hover:border-white/30;
+    @apply focus:-translate-y-px focus:border-black/40 focus:ring-2 focus:ring-black/15;
+    @apply dark:focus:border-white/40 dark:focus:ring-white/20;
   }
 
   .interactive-icon-btn {
@@ -129,8 +135,12 @@ html.dark body {
   }
 
   .surface-panel {
-    @apply rounded-card border border-brand-skyDeep/50 bg-brand-white shadow-sm;
-    @apply dark:border-brand-white/10 dark:bg-brand-navy/50;
+    @apply rounded-card border border-brand-skyDeep/50 bg-white shadow-sm;
+    @apply dark:border-white/10 dark:bg-brand-navy/50;
+  }
+
+  .brand-divider {
+    @apply w-px shrink-0 bg-black/20 dark:bg-white/30;
   }
 }
 

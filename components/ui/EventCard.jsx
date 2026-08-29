@@ -60,7 +60,7 @@ export default function EventCard({ event }) {
           href={formUrl}
           target="_blank"
           rel="noreferrer noopener"
-          className="interactive-btn mt-4 inline-flex items-center justify-center gap-2 rounded-full bg-brand-navy px-4 py-2.5 text-sm font-semibold text-brand-white hover:bg-brand-navyMid dark:bg-brand-white dark:text-brand-navy dark:hover:bg-brand-sky"
+          className="interactive-btn cta-solid mt-4 inline-flex items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold"
         >
           {isUpcoming ? 'View details & register' : 'Open form'}
           <span aria-hidden="true">→</span>

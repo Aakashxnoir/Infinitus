@@ -7,15 +7,8 @@ import InfinitusLogo from '@/components/brand/InfinitusLogo';
 import RitLogo from '@/components/brand/RitLogo';
 import { useTheme } from '@/components/ui/ThemeProvider';
 
-function BrandDivider({ isDark }) {
-  return (
-    <span
-      aria-hidden="true"
-      className={`mx-2 h-10 w-px shrink-0 sm:mx-3 sm:h-12 md:mx-4 md:h-14 ${
-        isDark ? 'bg-white/30' : 'bg-black/20'
-      }`}
-    />
-  );
+function BrandDivider() {
+  return <span aria-hidden="true" className="brand-divider mx-2 h-10 sm:mx-3 sm:h-12 md:mx-4 md:h-14" />;
 }
 
 export default function Hero() {
@@ -66,7 +59,7 @@ export default function Hero() {
           className="flex items-center justify-center"
         >
           <InfinitusLogo size="hero" priority interactive />
-          <BrandDivider isDark={isDark} />
+          <BrandDivider />
           <RitLogo size="hero" interactive className="shrink-0" />
           <span className="sr-only">{CLUB_NAME}</span>
         </motion.h1>
@@ -94,7 +87,7 @@ export default function Hero() {
           initial={initial(12)}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, delay: 0.38 }}
-          className="interactive-btn mt-5 inline-flex min-h-11 items-center gap-2 rounded-full bg-black px-6 py-3 text-sm font-semibold text-white hover:bg-black/85 dark:bg-white dark:text-black dark:hover:bg-white/90 sm:mt-6"
+          className="interactive-btn cta-solid mt-5 inline-flex min-h-11 items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold sm:mt-6"
         >
           {COPY.hero.cta}
         </motion.a>
