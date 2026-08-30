@@ -3,15 +3,6 @@
 import { useEffect, useId, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
-const LEADERSHIP_ROLES = new Set([
-  'Faculty Coordinator',
-  'President',
-  'Vice President',
-  'Secretary',
-  'Joint Secretary',
-  'Treasurer',
-]);
-
 function LinkedinIcon(props) {
   return (
     <svg viewBox="0 0 24 24" fill="none" strokeWidth="1.75" {...props}>
@@ -71,7 +62,6 @@ function Avatar({ name, photoUrl }) {
 }
 
 function MemberDetailModal({ member, open, onClose, titleId }) {
-  const isLeadership = LEADERSHIP_ROLES.has(member.role);
   const meta = [member.department, member.year].filter(Boolean).join(' · ');
 
   useEffect(() => {
@@ -113,7 +103,7 @@ function MemberDetailModal({ member, open, onClose, titleId }) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 12, scale: 0.97 }}
             transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="relative z-10 w-full max-w-lg rounded-card border border-brand-skyDeep/50 bg-white p-6 shadow-md dark:border-white/10 dark:bg-brand-navy sm:p-8"
+            className="relative z-10 w-full max-w-lg rounded-card border border-brand-skyDeep/50 bg-white p-6 shadow-md dark:border-brand-amber/40 dark:bg-brand-navy sm:p-8"
           >
             <button
               type="button"
@@ -133,11 +123,7 @@ function MemberDetailModal({ member, open, onClose, titleId }) {
                 <h3 id={titleId} className="font-heading text-xl font-semibold text-black dark:text-white">
                   {member.name}
                 </h3>
-                <p
-                  className={`mt-1 text-sm font-semibold ${
-                    isLeadership ? 'text-brand-amber' : 'text-black/70 dark:text-white/70'
-                  }`}
-                >
+                <p className="mt-1 text-sm font-semibold text-brand-amber">
                   {member.role}
                 </p>
                 {member.team && (
@@ -195,7 +181,6 @@ function MemberDetailModal({ member, open, onClose, titleId }) {
 export default function MemberCard({ member }) {
   const [open, setOpen] = useState(false);
   const titleId = useId();
-  const isLeadership = LEADERSHIP_ROLES.has(member.role);
   const meta = [member.department, member.year].filter(Boolean).join(' · ');
 
   return (
@@ -206,7 +191,7 @@ export default function MemberCard({ member }) {
         whileHover={{ y: -8, scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         transition={{ duration: 0.25, ease: 'easeOut' }}
-        className="interactive-card group w-full cursor-pointer p-3 text-center sm:p-4 md:p-5"
+        className="interactive-card group w-full cursor-pointer border p-3 text-center dark:border-brand-amber/40 dark:hover:border-brand-amber/60 sm:p-4 md:p-5"
         aria-haspopup="dialog"
         aria-expanded={open}
       >
@@ -218,11 +203,7 @@ export default function MemberCard({ member }) {
           {member.name}
         </h3>
 
-        <p
-          className={`mt-1 text-xs font-medium leading-snug sm:text-sm ${
-            isLeadership ? 'text-brand-amber' : 'text-black/65 dark:text-white/65'
-          }`}
-        >
+        <p className="mt-1 text-xs font-medium leading-snug text-brand-amber sm:text-sm">
           {member.role}
         </p>
 
