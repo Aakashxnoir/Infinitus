@@ -1,75 +1,63 @@
-import { COPY } from '@/lib/site';
-import Reveal from '@/components/ui/Reveal';
+import { COPY, SOCIAL } from '@/lib/site';
+import Reveal, { Stagger, StaggerItem } from '@/components/ui/Reveal';
+import SplitText from '@/components/ui/SplitText';
+import Journey from '@/components/sections/Journey';
 
+/** Body of the About page: mission statement, what we do, and the timeline. */
 export default function AboutUs() {
+  const { about } = COPY;
+
   return (
-    <section id="about" className="section-shell section-pad scroll-mt-24">
-      <div className="section-inner">
-        <Reveal>
-          <div className="border-b border-brand-skyDeep/50 pb-10 dark:border-brand-white/10 lg:pb-12">
-            <p className="page-eyebrow">{COPY.about.eyebrow}</p>
-            <h2 className="page-heading mt-3">{COPY.about.heading}</h2>
-          </div>
-        </Reveal>
+    <>
+      <section className="section">
+        <div className="container-x grid gap-12 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] lg:gap-24">
+          <h2 className="font-heading text-3xl font-medium leading-[1.2] text-fg sm:text-5xl xl:text-6xl">
+            <SplitText text={about.statement} onView stagger={0.03} />{' '}
+            <SplitText text={about.statementAccent} onView delay={0.4} className="italic text-accent" />
+          </h2>
+          <Reveal delay={0.2} className="space-y-5 self-end leading-relaxed text-muted">
+            <p>{about.bodySecondary}</p>
+            <p>{about.focus}</p>
+          </Reveal>
+        </div>
+      </section>
 
-        <Reveal delay={0.06} className="mt-10 lg:mt-12">
-          <div className="grid gap-8 lg:grid-cols-12 lg:gap-10">
-            <p className="font-heading text-[1.35rem] font-semibold leading-snug tracking-tight text-brand-navy dark:text-brand-white sm:text-2xl sm:leading-snug lg:col-span-7 lg:text-[1.65rem] lg:leading-[1.35]">
-              {COPY.about.body}
-            </p>
-            <p className="text-base leading-relaxed text-brand-ink/65 dark:text-brand-white/65 sm:text-lg sm:leading-8 lg:col-span-5 lg:pt-1">
-              {COPY.about.bodySecondary}
-            </p>
-          </div>
-        </Reveal>
+      <section className="section border-t border-fg/15 bg-bg-2/50">
+        <div className="container-x">
+          <Reveal className="flex items-baseline justify-between gap-6">
+            <h2 className="font-heading text-2xl font-semibold text-fg sm:text-4xl">What we do</h2>
+            <span className="font-mono text-sm text-muted">{about.pillars.length} programmes</span>
+          </Reveal>
 
-        <Reveal delay={0.1} className="mt-14 lg:mt-16">
-          <div className="mb-8 flex flex-col gap-2 sm:mb-10 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
-            <div>
-              <p className="page-eyebrow">{COPY.about.activitiesEyebrow}</p>
-              <h3 className="mt-2 font-heading text-2xl font-semibold tracking-tight text-brand-navy dark:text-brand-white sm:text-[1.75rem]">
-                {COPY.about.activitiesHeading}
-              </h3>
-            </div>
-            <p className="max-w-sm text-sm leading-relaxed text-brand-ink/50 dark:text-brand-white/50 sm:text-right">
-              {COPY.about.activitiesIntro}
-            </p>
-          </div>
-
-          <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 lg:gap-4">
-            {COPY.about.activities.map((item, index) => (
-              <li
-                key={item}
-                className="flex min-h-[4.5rem] items-start gap-3 rounded-2xl border border-brand-skyDeep/40 bg-brand-white/55 px-4 py-4 dark:border-brand-white/10 dark:bg-brand-navy/35 sm:px-5"
-              >
+          <Stagger as="ol" className="mt-12 grid overflow-hidden rounded-md border-l border-t border-fg/15 sm:grid-cols-2 lg:grid-cols-3">
+            {about.pillars.map((pillar, i) => (
+              <StaggerItem as="li" key={pillar.title} className="group relative border-b border-r border-fg/15 p-7 transition-colors duration-500 hover:bg-card sm:p-10">
                 <span
                   aria-hidden="true"
-                  className="font-heading text-sm font-bold tabular-nums text-brand-navy/35 dark:text-brand-white/35"
-                >
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-                <span className="pt-0.5 text-[15px] font-medium leading-snug text-brand-navy dark:text-brand-white sm:text-base">
-                  {item}
-                </span>
-              </li>
+                  className="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-accent transition-transform duration-500 ease-out group-hover:scale-x-100"
+                />
+                <p className="font-mono text-sm text-accent">1.{i + 1}</p>
+                <h3 className="mt-10 font-heading text-2xl font-semibold text-fg transition-transform duration-500 ease-out group-hover:translate-x-1">
+                  {pillar.title}
+                </h3>
+                <p className="mt-3 max-w-sm text-sm leading-relaxed text-muted">{pillar.body}</p>
+                {i === about.pillars.length - 1 && (
+                  <a
+                    href={SOCIAL.instagram}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-accent hover:underline"
+                  >
+                    Listen on Instagram <span aria-hidden="true">↗</span>
+                  </a>
+                )}
+              </StaggerItem>
             ))}
-          </ul>
-        </Reveal>
+          </Stagger>
+        </div>
+      </section>
 
-        <Reveal delay={0.14} className="mt-14 lg:mt-16">
-          <div className="grid gap-6 rounded-card border border-brand-skyDeep/45 bg-brand-white/70 p-6 dark:border-brand-white/10 dark:bg-brand-navy/40 sm:p-8 lg:grid-cols-[220px_1fr] lg:gap-12 lg:p-10">
-            <div>
-              <p className="page-eyebrow">{COPY.about.focusEyebrow}</p>
-              <h3 className="mt-2 font-heading text-2xl font-semibold tracking-tight text-brand-navy dark:text-brand-white">
-                {COPY.about.focusHeading}
-              </h3>
-            </div>
-            <p className="text-base leading-relaxed text-brand-ink/70 dark:text-brand-white/70 sm:text-lg sm:leading-8 lg:border-l lg:border-brand-skyDeep/50 lg:pl-10 dark:lg:border-brand-white/15">
-              {COPY.about.focus}
-            </p>
-          </div>
-        </Reveal>
-      </div>
-    </section>
+      <Journey heading={about.journeyHeading} steps={about.journey} />
+    </>
   );
 }

@@ -9,6 +9,8 @@ create table if not exists members (
   name          text not null,
   role          text not null,
   role_rank     int not null default 100,
+  department    text,
+  year          text,
   photo_url     text,
   bio           text,
   linkedin_url  text,
@@ -42,27 +44,13 @@ create table if not exists event_images (
   sort_order int not null default 0
 );
 
-create table if not exists contact_messages (
-  id         uuid primary key default gen_random_uuid(),
-  name       text not null,
-  email      text not null,
-  message    text not null,
-  status     text not null default 'new', -- 'new' | 'read' | 'replied'
-  ip_address text,
-  created_at timestamptz not null default now()
-);
-
 create index if not exists idx_events_status_date on events (status, event_date desc);
 create index if not exists idx_members_role_rank on members (role_rank asc);
-create index if not exists idx_contact_status on contact_messages (status);
 
--- Row Level Security: public read on members/events, no public access to
--- contact_messages (writes go through the server-side API route using the
--- service role key, which bypasses RLS).
+-- Row Level Security: public read on members/events.
 alter table members enable row level security;
 alter table events enable row level security;
 alter table event_images enable row level security;
-alter table contact_messages enable row level security;
 
 create policy "Public can read active members" on members
   for select using (is_active = true);

@@ -1,134 +1,103 @@
 'use client';
 
-import { motion, useReducedMotion } from 'framer-motion';
-import { CLUB_NAME, COPY, sectionHref } from '@/lib/site';
-import { IMAGES } from '@/lib/branding';
-import InfinitusLogo from '@/components/brand/InfinitusLogo';
+import { useRef, useState } from 'react';
+import Link from 'next/link';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { CLUB_SHORT, COPY } from '@/lib/site';
+import { EASE, introDelay } from '@/lib/motion';
 import RitLogo from '@/components/brand/RitLogo';
-import { useTheme } from '@/components/ui/ThemeProvider';
+import Lemniscate from '@/components/ui/Lemniscate';
+import SplitText from '@/components/ui/SplitText';
+import Counter from '@/components/ui/Counter';
 
-export default function Hero() {
-  const prefersReducedMotion = useReducedMotion();
-  const { isDark } = useTheme();
-  const initial = (y) => (prefersReducedMotion ? false : { opacity: 0, y });
+export default function Hero({ stats = [] }) {
+  const ref = useRef(null);
+  const [start] = useState(introDelay);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
+  const titleY = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
+  const figureY = useTransform(scrollYProgress, [0, 1], ['0%', '-18%']);
+  const figureRotate = useTransform(scrollYProgress, [0, 1], [0, -6]);
+
+  const rise = (delay) => ({
+    initial: { opacity: 0, y: 24 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.9, delay: start + delay, ease: EASE.out },
+  });
 
   return (
-    <section
-      id="home"
-      className={`section-shell relative flex min-h-screen scroll-mt-24 items-center justify-center pt-16`}
-    >
-      <div aria-hidden="true" className="absolute inset-0 overflow-hidden">
-        <div
-          className={`hero-bg-pan absolute inset-0 bg-cover bg-center ${
-            isDark ? 'opacity-20' : 'opacity-40'
-          }`}
-          style={{ backgroundImage: `url('${IMAGES.heroBackground}')` }}
-        />
-        {isDark ? (
-          <>
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  'radial-gradient(ellipse 70% 55% at 50% 42%, rgba(0,32,96,0.45) 0%, rgba(0,27,72,0.82) 50%, rgba(0,15,46,0.96) 100%)',
-              }}
-            />
-          </>
-        ) : (
-          <>
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  'radial-gradient(ellipse 70% 55% at 50% 42%, rgba(234,244,255,0.92) 0%, rgba(234,244,255,0.6) 45%, rgba(234,244,255,0.18) 75%, rgba(234,244,255,0) 100%)',
-              }}
-            />
-            <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-brand-sky" />
-          </>
-        )}
-      </div>
+    <section ref={ref} className="relative overflow-hidden pb-10 pt-28 sm:pt-32">
+      <div aria-hidden="true" className="graph-paper pointer-events-none absolute inset-0" />
 
-      <div className="relative z-10 mx-auto max-w-2xl px-6 text-center">
-        <motion.h1
-          initial={initial(20)}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.15 }}
-          className="mx-auto flex justify-center"
-        >
-          <InfinitusLogo size="hero" priority interactive />
-          <span className="sr-only">{CLUB_NAME}</span>
-        </motion.h1>
-
-        <motion.p
-          initial={initial(20)}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.3 }}
-          className={`mt-4 font-heading text-xl font-semibold sm:text-2xl ${
-            isDark ? 'text-brand-white' : 'text-brand-navy'
-          }`}
-        >
-          {COPY.hero.tagline}
-        </motion.p>
-
-        <motion.p
-          initial={initial(20)}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.4 }}
-          className={`mt-3 text-base sm:text-lg ${
-            isDark ? 'text-brand-white/75' : 'text-brand-ink/70'
-          }`}
-        >
-          {COPY.hero.support}
-        </motion.p>
-
-        <motion.div
-          initial={initial(16)}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="mt-5 flex justify-center"
-        >
-          <RitLogo size="sm" interactive />
+      <div className="container-x relative">
+        <motion.div {...rise(0)} className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-muted">
+          <RitLogo size="xs" />
+          <span aria-hidden="true" className="h-4 w-px bg-fg/20" />
+          <span>{COPY.hero.badge}</span>
         </motion.div>
 
-        <motion.a
-          href={sectionHref('members')}
-          initial={initial(20)}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.6 }}
-          className={`interactive-btn mt-6 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold ${
-            isDark
-              ? 'bg-brand-white text-brand-navy hover:bg-brand-sky'
-              : 'bg-brand-navy text-brand-white hover:bg-brand-navyMid'
-          }`}
-        >
-          {COPY.hero.cta}
-        </motion.a>
-      </div>
+        <motion.div style={{ y: titleY }}>
+          <SplitText
+            as="h1"
+            text={CLUB_SHORT}
+            by="char"
+            stagger={0.05}
+            delay={0.1}
+            className="mt-6 block whitespace-nowrap font-heading text-[clamp(3.25rem,17.6vw,26rem)] font-semibold leading-[0.95] tracking-[-0.02em] text-fg"
+          />
+        </motion.div>
 
-      <motion.div
-        aria-hidden="true"
-        initial={prefersReducedMotion ? false : { opacity: 0 }}
-        animate={{
-          opacity: 1,
-          y: prefersReducedMotion ? 0 : [0, 8, 0],
-        }}
-        transition={{
-          opacity: { duration: 0.6, delay: 0.8 },
-          y: {
-            duration: 1.8,
-            delay: 0.8,
-            repeat: prefersReducedMotion ? 0 : Infinity,
-            ease: 'easeInOut',
-          },
-        }}
-        className={`absolute bottom-8 left-1/2 -translate-x-1/2 ${
-          isDark ? 'text-brand-white/50' : 'text-brand-navy/50'
-        }`}
-      >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" strokeWidth="1.75">
-          <path d="M6 9l6 6 6-6" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </motion.div>
+        <motion.div
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 1.2, delay: start + 0.5, ease: EASE.inOut }}
+          className="mt-8 h-px origin-left bg-fg/20"
+        />
+
+        <div className="grid gap-12 pt-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)] lg:items-center lg:gap-20">
+          <div>
+            <motion.p {...rise(0.6)} className="font-heading text-2xl italic text-fg sm:text-4xl">
+              {COPY.hero.tagline}.
+            </motion.p>
+            <motion.p {...rise(0.7)} className="lede mt-5 max-w-lg">
+              {COPY.hero.support}
+            </motion.p>
+            <motion.div {...rise(0.8)} className="mt-8 flex flex-wrap gap-3">
+              <Link href="/events" className="btn-primary">
+                {COPY.hero.primaryCta} <span aria-hidden="true" className="nudge">→</span>
+              </Link>
+              <Link href="/team" className="btn-ghost">
+                {COPY.hero.secondaryCta}
+              </Link>
+            </motion.div>
+          </div>
+
+          <motion.figure
+            initial={{ opacity: 0, scale: 0.94 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, delay: start + 0.4, ease: EASE.out }}
+            style={{ y: figureY, rotate: figureRotate }}
+          >
+            <Lemniscate axes dot draw drawDelay={start + 0.5} className="w-full" />
+            <figcaption className="mt-4 text-sm leading-relaxed text-muted">
+              <span className="font-medium text-fg">Fig. 1.</span> The lemniscate of Bernoulli,{' '}
+              <span className="font-serif italic">(x² + y²)² = a²(x² − y²)</span> — the curve behind our name.
+            </figcaption>
+          </motion.figure>
+        </div>
+
+        {stats.length > 0 && (
+          <motion.dl {...rise(1)} className="mt-16 grid grid-cols-3 border-y border-fg/15">
+            {stats.map((stat, i) => (
+              <div key={stat.label} className={`flex flex-col-reverse py-6 ${i ? 'border-l border-fg/15 pl-4 sm:pl-8' : ''}`}>
+                <dt className="mt-1 text-xs text-muted sm:text-sm">{stat.label}</dt>
+                <dd className="font-heading text-4xl font-medium text-fg sm:text-6xl lg:text-7xl">
+                  <Counter value={stat.value} />
+                </dd>
+              </div>
+            ))}
+          </motion.dl>
+        )}
+      </div>
     </section>
   );
 }

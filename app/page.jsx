@@ -1,38 +1,40 @@
-import Loader from '@/components/layout/Loader';
-import Nav from '@/components/layout/Nav';
-import Footer from '@/components/layout/Footer';
 import Hero from '@/components/sections/Hero';
-import AboutUs from '@/components/sections/AboutUs';
-import MembersGrid from '@/components/sections/MembersGrid';
-import EventsSection from '@/components/sections/EventsSection';
-import GallerySection from '@/components/sections/GallerySection';
-import ContactSection from '@/components/sections/ContactSection';
+import {
+  CtaBand,
+  HomeAbout,
+  HomeEvents,
+  HomeExplore,
+  HomeGallery,
+  HomeTeam,
+  KeywordMarquee,
+} from '@/components/sections/home/HomeSections';
+import { galleryPhotos } from '@/components/sections/GallerySection';
+import { getMembers } from '@/lib/members';
+import { getEvents } from '@/lib/events';
 
-/**
- * Single-page site map (official navigation order):
- *   #home     → Hero
- *   #about    → AboutUs
- *   #members  → MembersGrid (Core Team)
- *   #events   → EventsSection
- *   #gallery  → GallerySection
- *   #contact  → ContactSection
- */
-export default function Home() {
+export const revalidate = 60;
+
+/** Home: a tour of the club, with each section leading to its own page. */
+export default async function Home() {
+  const [members, events] = await Promise.all([getMembers(), getEvents()]);
+  const pastEvents = events.filter((e) => e.status !== 'upcoming');
+
+  const stats = [
+    { value: pastEvents.length, label: 'Events hosted' },
+    { value: members.length, label: 'Core members' },
+    { value: new Set(members.map((m) => m.department).filter(Boolean)).size, label: 'Departments' },
+  ];
+
   return (
     <>
-      <Loader />
-      <Nav />
-
-      <main className="relative">
-        <Hero />
-        <AboutUs />
-        <MembersGrid />
-        <EventsSection />
-        <GallerySection />
-        <ContactSection />
-      </main>
-
-      <Footer />
+      <Hero stats={stats} />
+      <KeywordMarquee />
+      <HomeAbout />
+      <HomeExplore />
+      <HomeEvents events={events} />
+      <HomeTeam members={members} />
+      <HomeGallery photos={galleryPhotos(events)} />
+      <CtaBand />
     </>
   );
 }

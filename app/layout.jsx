@@ -1,29 +1,43 @@
-import { Space_Grotesk, Inter } from 'next/font/google';
-import { INFINITUS_LOGO } from '@/lib/branding';
+import { STIX_Two_Text, IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google';
 import { CLUB_NAME, COLLEGE_NAME, SITE } from '@/lib/site';
 import { ThemeProvider } from '@/components/ui/ThemeProvider';
+import Loader from '@/components/layout/Loader';
+import Nav from '@/components/layout/Nav';
+import Footer from '@/components/layout/Footer';
 import '@/styles/globals.css';
 
-const heading = Space_Grotesk({
+// STIX is the typeface of mathematical publishing; it sets both headings and italic accents.
+const serif = STIX_Two_Text({
   subsets: ['latin'],
-  weight: ['500', '600', '700'],
-  variable: '--font-heading',
+  weight: ['400', '500', '600'],
+  style: ['normal', 'italic'],
+  variable: '--font-serif',
   display: 'swap',
 });
 
-const body = Inter({
+const body = IBM_Plex_Sans({
   subsets: ['latin'],
   weight: ['400', '500', '600'],
   variable: '--font-body',
   display: 'swap',
 });
 
-const themeInitScript = `
+const mono = IBM_Plex_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  variable: '--font-mono',
+  display: 'swap',
+});
+
+// Before paint: theme (saved choice, else the system's) and whether the intro already played this session.
+const initScript = `
 (function () {
+  var root = document.documentElement;
   try {
     var stored = localStorage.getItem('infinitus-theme');
-    if (stored === 'dark') document.documentElement.classList.add('dark');
-    else document.documentElement.classList.remove('dark');
+    root.classList.toggle('dark', stored ? stored === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches);
+    if (sessionStorage.getItem('infinitus-intro-seen')) root.classList.add('intro-seen');
+    else sessionStorage.setItem('infinitus-intro-seen', '1');
   } catch (e) {}
 })();
 `;
@@ -39,34 +53,17 @@ export const metadata = {
   authors: [{ name: CLUB_NAME }],
   creator: CLUB_NAME,
   publisher: COLLEGE_NAME,
-  icons: {
-    icon: [
-      { url: '/brand/favicon.png', sizes: '32x32', type: 'image/png' },
-      { url: '/brand/infinitus-nav.webp', sizes: '80x80', type: 'image/webp' },
-    ],
-    shortcut: '/brand/favicon.png',
-    apple: [{ url: '/apple-icon.png', sizes: '180x180', type: 'image/png' }],
-  },
   openGraph: {
     title: SITE.title,
     description: SITE.description,
     type: 'website',
     locale: SITE.locale,
     siteName: CLUB_NAME,
-    images: [
-      {
-        url: INFINITUS_LOGO.og,
-        width: 512,
-        height: 512,
-        alt: CLUB_NAME,
-      },
-    ],
   },
   twitter: {
-    card: 'summary',
+    card: 'summary_large_image',
     title: SITE.title,
     description: SITE.description,
-    images: [INFINITUS_LOGO.og],
   },
   robots: {
     index: true,
@@ -74,18 +71,32 @@ export const metadata = {
   },
 };
 
+export const viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: dark)', color: '#0C0E1F' },
+    { media: '(prefers-color-scheme: light)', color: '#F7F5EF' },
+  ],
+};
+
 export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${heading.variable} ${body.variable}`}
+      className={`${serif.variable} ${body.variable} ${mono.variable}`}
+      // Lets Next.js turn smooth scrolling off while it resets scroll on route changes
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        <script dangerouslySetInnerHTML={{ __html: initScript }} />
       </head>
       <body className="font-body antialiased" suppressHydrationWarning>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <Loader />
+          <Nav />
+          {children}
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );

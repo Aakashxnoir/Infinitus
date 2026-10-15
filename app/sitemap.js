@@ -1,12 +1,23 @@
-import { SITE } from '@/lib/site';
+import { SITE, PAGES } from '@/lib/site';
+import { getEvents } from '@/lib/events';
+import { eventHref } from '@/lib/format';
 
-export default function sitemap() {
+export default async function sitemap() {
+  const events = await getEvents();
+  const now = new Date();
+
   return [
-    {
-      url: SITE.url,
-      lastModified: new Date(),
+    ...PAGES.map((page) => ({
+      url: `${SITE.url}${page.href === '/' ? '' : page.href}`,
+      lastModified: now,
       changeFrequency: 'weekly',
-      priority: 1,
-    },
+      priority: page.href === '/' ? 1 : 0.8,
+    })),
+    ...events.map((event) => ({
+      url: `${SITE.url}${eventHref(event)}`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    })),
   ];
 }

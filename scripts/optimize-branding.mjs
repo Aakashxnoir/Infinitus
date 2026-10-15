@@ -146,14 +146,7 @@ async function main() {
     .toFile(faviconPath);
   console.log(`  ✓ favicon.png (${((await fs.stat(faviconPath)).size / 1024).toFixed(1)} KB)`);
 
-  // Next.js App Router tab icons
-  await sharp(infinitusSrc)
-    .resize(48, 48, {
-      fit: 'contain',
-      background: { r: 0, g: 0, b: 0, alpha: 0 },
-    })
-    .png()
-    .toFile(path.join(APP_DIR, 'icon.png'));
+  // Next.js App Router touch icon (the tab icon is the hand-drawn app/icon.svg)
   await sharp(infinitusSrc)
     .resize(180, 180, {
       fit: 'contain',
@@ -161,7 +154,7 @@ async function main() {
     })
     .png()
     .toFile(path.join(APP_DIR, 'apple-icon.png'));
-  console.log('  ✓ app/icon.png + app/apple-icon.png');
+  console.log('  ✓ app/apple-icon.png');
 
   console.log('\nDone — optimized assets written to public/brand/');
 }

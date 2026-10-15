@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const token = (name) => `rgb(var(--${name}) / <alpha-value>)`;
+
 module.exports = {
   darkMode: 'class',
   content: [
@@ -8,30 +10,23 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        brand: {
-          // Logo navy + light sky (light mode surfaces / dark mode chrome)
-          navy: '#001B48',
-          navyDeep: '#000F2E',
-          navyMid: '#002060',
-          indigo: '#002060',
-          indigoDeep: '#001538',
-          white: '#FFFFFF',
-          cloud: '#F4FAFF',
-          sky: '#EAF4FF',
-          skyDeep: '#CFE6FB',
-          cyan: '#4DB8E8',
-          cyanGlow: '#86D8FB',
-          amber: '#F0C14D',
-          ink: '#1A1D2E',
-          offwhite: '#FAFBFC',
-        },
+        // Theme tokens — values live in styles/globals.css (:root = light, .dark = dark)
+        bg: token('bg'),
+        'bg-2': token('bg-2'),
+        card: token('card'),
+        fg: token('fg'),
+        muted: token('muted'),
+        accent: token('accent'),
+        'accent-2': token('accent-2'),
+        gold: token('gold'),
+        'btn-bg': token('btn-bg'),
+        'btn-fg': token('btn-fg'),
       },
       fontFamily: {
-        heading: ['var(--font-heading)', 'sans-serif'],
+        heading: ['var(--font-serif)', 'serif'],
         body: ['var(--font-body)', 'sans-serif'],
-      },
-      borderRadius: {
-        card: '1.75rem',
+        serif: ['var(--font-serif)', 'serif'],
+        mono: ['var(--font-mono)', 'monospace'],
       },
     },
   },

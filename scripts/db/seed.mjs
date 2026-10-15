@@ -49,8 +49,9 @@ async function seedMembers() {
     name: m.name,
     role: m.role,
     role_rank: i + 1,
-    photo_url: m.photoUrl,
-    bio: m.bio || [m.department, m.year].filter(Boolean).join(', ') || null,
+    department: m.department,
+    year: m.year,
+    bio: m.bio,
     linkedin_url: m.linkedinUrl,
     instagram_url: m.instagramUrl,
   }));
@@ -70,7 +71,7 @@ async function seedEvents() {
     cover_image_url: e.coverImageUrl,
     venue: e.venue,
     external_link: e.registrationFormUrl || e.externalLink,
-    registration_form_url: e.registrationFormUrl || e.externalLink,
+    registration_form_url: e.registrationFormUrl || null,
   }));
 
   const { error } = await supabase.from('events').insert(rows);

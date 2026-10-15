@@ -1,97 +1,67 @@
 'use client';
 
-import { useEffect, useId, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { metaOf } from '@/lib/format';
 
-const LEADERSHIP_ROLES = new Set([
-  'President',
-  'Vice President',
-  'Secretary',
-  'Joint Secretary',
-  'Treasurer',
-]);
-
-function LinkedinIcon(props) {
+/** Office-bearer tile: role, name, department · year. Opens the member dialog. */
+export default function MemberCard({ member, onOpen }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" strokeWidth="1.75" {...props}>
-      <rect x="4" y="4" width="16" height="16" rx="3" stroke="currentColor" />
-      <path
-        d="M8 10.5v5M8 8v.01M12 15.5v-3a1.8 1.8 0 0 1 3.6 0v3M12 12.2v3.3"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function InstagramIcon(props) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" strokeWidth="1.75" {...props}>
-      <rect x="4" y="4" width="16" height="16" rx="5" stroke="currentColor" />
-      <circle cx="12" cy="12" r="3.3" stroke="currentColor" />
-      <path d="M16.2 7.8h.01" stroke="currentColor" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function CloseIcon(props) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" strokeWidth="1.75" {...props}>
-      <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function Avatar({ name, photoUrl }) {
-  if (photoUrl) {
-    return (
-      // eslint-disable-next-line @next/next/no-img-element
-      <img src={photoUrl} alt={name} className="h-full w-full object-cover" loading="lazy" />
-    );
-  }
-
-  const initials = name
-    .split(' ')
-    .map((part) => part[0])
-    .filter(Boolean)
-    .slice(0, 2)
-    .join('')
-    .toUpperCase();
-
-  return (
-    <div
-      aria-hidden="true"
-      className="flex h-full w-full items-center justify-center bg-brand-sky font-heading text-2xl font-semibold text-brand-navy dark:bg-brand-navyMid dark:text-brand-white"
+    <button
+      type="button"
+      onClick={(event) => onOpen(member, event.currentTarget)}
+      aria-haspopup="dialog"
+      className="card card-hover group flex h-full w-full flex-col p-5 text-left transition-[transform,border-color,box-shadow] duration-500 ease-out hover:-translate-y-1 hover:shadow-[0_20px_40px_-24px_rgb(var(--fg)/0.4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent sm:p-6"
     >
-      {initials}
-    </div>
+      <span className="flex items-start justify-between gap-2">
+        <span className="text-sm font-medium text-gold">{member.role}</span>
+        <span aria-hidden="true" className="text-muted opacity-0 transition-all duration-300 group-hover:translate-x-0.5 group-hover:text-accent group-hover:opacity-100">
+          +
+        </span>
+      </span>
+      <h3 className="mt-10 font-heading text-xl font-semibold leading-snug text-fg xl:text-2xl">{member.name}</h3>
+      {metaOf(member) && <p className="mt-1 font-mono text-xs text-muted">{metaOf(member)}</p>}
+    </button>
   );
 }
 
-function MemberDetailModal({ member, open, onClose, titleId }) {
-  const isLeadership = LEADERSHIP_ROLES.has(member.role);
-  const meta = [member.department, member.year].filter(Boolean).join(' · ');
+export function MemberDialog({ member, onClose }) {
+  const dialogRef = useRef(null);
+  const closeRef = useRef(null);
 
   useEffect(() => {
-    if (!open) return undefined;
-    const onKey = (event) => {
-      if (event.key === 'Escape') onClose();
-    };
-    document.addEventListener('keydown', onKey);
+    if (!member) return undefined;
+    closeRef.current?.focus();
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+
+    const onKey = (event) => {
+      if (event.key === 'Escape') onClose();
+      if (event.key !== 'Tab' || !dialogRef.current) return;
+      // Keep keyboard focus inside the dialog
+      const focusables = dialogRef.current.querySelectorAll('a[href], button');
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener('keydown', onKey);
     return () => {
       document.removeEventListener('keydown', onKey);
       document.body.style.overflow = prevOverflow;
     };
-  }, [open, onClose]);
+  }, [member, onClose]);
 
   return (
     <AnimatePresence>
-      {open && (
+      {member && (
         <motion.div
-          className="fixed inset-0 z-[60] flex items-center justify-center p-4 sm:p-6"
+          className="fixed inset-0 z-[60] flex items-end justify-center p-4 sm:items-center sm:p-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -99,145 +69,65 @@ function MemberDetailModal({ member, open, onClose, titleId }) {
         >
           <button
             type="button"
+            tabIndex={-1}
             aria-label="Close member details"
-            className="absolute inset-0 bg-brand-navyDeep/70 backdrop-blur-sm"
+            className="absolute inset-0 bg-bg/80"
             onClick={onClose}
           />
-
           <motion.div
+            ref={dialogRef}
             role="dialog"
             aria-modal="true"
-            aria-labelledby={titleId}
-            initial={{ opacity: 0, y: 16, scale: 0.96 }}
+            aria-labelledby="member-dialog-title"
+            initial={{ opacity: 0, y: 24, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 12, scale: 0.97 }}
-            transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="relative z-10 w-full max-w-lg rounded-card border border-brand-skyDeep/50 bg-brand-white p-6 shadow-md sm:p-8"
+            exit={{ opacity: 0, y: 16, scale: 0.98 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="relative z-10 w-full max-w-lg overflow-hidden rounded-md border border-fg/15 bg-card shadow-xl"
           >
             <button
+              ref={closeRef}
               type="button"
               onClick={onClose}
               aria-label="Close"
-              className="interactive-icon-btn absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full text-brand-navy/60"
+              className="absolute right-3 top-3 z-10 flex h-10 w-10 items-center justify-center rounded-md text-fg transition-colors hover:bg-fg/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             >
-              <CloseIcon className="h-5 w-5" />
+              <svg viewBox="0 0 24 24" fill="none" strokeWidth="1.75" className="h-5 w-5" aria-hidden="true">
+                <path d="M6 6l12 12M18 6 6 18" stroke="currentColor" strokeLinecap="round" />
+              </svg>
             </button>
 
-            <div className="flex flex-col items-center text-center sm:flex-row sm:items-start sm:text-left">
-              <div className="h-20 w-20 shrink-0 overflow-hidden rounded-full ring-2 ring-brand-skyDeep/60 sm:h-24 sm:w-24">
-                <Avatar name={member.name} photoUrl={member.photoUrl} />
-              </div>
+            <div className="p-6 sm:p-8">
+              {member.team && <p className="chip">{member.team}</p>}
+              <h3 id="member-dialog-title" className="mt-4 pr-10 font-heading text-2xl font-semibold text-fg">
+                {member.name}
+              </h3>
+              <p className="mt-1 font-medium text-gold">{member.role}</p>
+              {metaOf(member) && <p className="mt-1 font-mono text-xs text-muted">{metaOf(member)}</p>}
 
-              <div className="mt-4 sm:ml-5 sm:mt-0 sm:flex-1">
-                <h3 id={titleId} className="font-heading text-xl font-semibold text-brand-navy dark:text-brand-navy">
-                  {member.name}
-                </h3>
-                <p
-                  className={`mt-1 text-sm font-semibold ${
-                    isLeadership ? 'text-brand-amber' : 'text-brand-navy/70'
-                  }`}
-                >
-                  {member.role}
-                </p>
-                {member.team && (
-                  <p className="mt-1 text-xs font-medium uppercase tracking-[0.18em] text-brand-navy/55">
-                    {member.team}
-                  </p>
-                )}
-                {meta && <p className="mt-1 text-xs text-brand-ink/45">{meta}</p>}
-              </div>
-            </div>
-
-            <div className="mt-6 border-t border-brand-skyDeep/40 pt-5">
-              <p className="font-heading text-xs font-semibold uppercase tracking-[0.2em] text-brand-navy/50">
-                Role responsibilities
+              <p className="mt-6 text-sm font-medium text-fg">Role responsibilities</p>
+              <p className="mt-2 text-sm leading-relaxed text-fg/85">
+                {member.responsibilities || 'Role responsibilities for this member will be published soon.'}
               </p>
-              <p className="mt-3 text-sm leading-relaxed text-brand-ink/75">
-                {member.responsibilities ||
-                  'Role responsibilities for this member will be published soon.'}
-              </p>
-            </div>
 
-            {(member.linkedinUrl || member.instagramUrl) && (
-              <div className="mt-5 flex justify-center gap-3 sm:justify-start">
-                {member.linkedinUrl && (
-                  <a
-                    href={member.linkedinUrl}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    aria-label={`${member.name} on LinkedIn`}
-                    className="interactive-link rounded-full p-1 text-brand-ink/50 hover:text-brand-navy"
-                  >
-                    <LinkedinIcon className="h-5 w-5" />
-                  </a>
-                )}
-                {member.instagramUrl && (
-                  <a
-                    href={member.instagramUrl}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    aria-label={`${member.name} on Instagram`}
-                    className="interactive-link rounded-full p-1 text-brand-ink/50 hover:text-brand-navy"
-                  >
-                    <InstagramIcon className="h-5 w-5" />
-                  </a>
-                )}
-              </div>
-            )}
+              {(member.linkedinUrl || member.instagramUrl) && (
+                <div className="mt-6 flex gap-4 text-sm">
+                  {member.linkedinUrl && (
+                    <a href={member.linkedinUrl} target="_blank" rel="noreferrer noopener" className="text-accent hover:underline">
+                      LinkedIn ↗
+                    </a>
+                  )}
+                  {member.instagramUrl && (
+                    <a href={member.instagramUrl} target="_blank" rel="noreferrer noopener" className="text-accent hover:underline">
+                      Instagram ↗
+                    </a>
+                  )}
+                </div>
+              )}
+            </div>
           </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
-  );
-}
-
-export default function MemberCard({ member }) {
-  const [open, setOpen] = useState(false);
-  const titleId = useId();
-  const isLeadership = LEADERSHIP_ROLES.has(member.role);
-  const meta = [member.department, member.year].filter(Boolean).join(' · ');
-
-  return (
-    <>
-      <motion.button
-        type="button"
-        onClick={() => setOpen(true)}
-        whileHover={{ y: -8, scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-        transition={{ duration: 0.25, ease: 'easeOut' }}
-        className="interactive-card group w-full cursor-pointer p-5 text-center"
-        aria-haspopup="dialog"
-        aria-expanded={open}
-      >
-        <div className="mx-auto h-24 w-24 overflow-hidden rounded-full ring-2 ring-brand-skyDeep/50 transition-all duration-300 group-hover:ring-brand-navy/30">
-          <Avatar name={member.name} photoUrl={member.photoUrl} />
-        </div>
-
-        <h3 className="mt-4 font-heading text-base font-semibold text-brand-navy dark:text-brand-white">
-          {member.name}
-        </h3>
-
-        <p
-          className={`mt-1 text-sm font-medium ${
-            isLeadership ? 'text-brand-amber' : 'text-brand-ink/60 dark:text-brand-white/60'
-          }`}
-        >
-          {member.role}
-        </p>
-
-        {meta && <p className="mt-1 text-xs text-brand-ink/45 dark:text-brand-white/45">{meta}</p>}
-
-        <p className="mt-3 text-[11px] font-medium uppercase tracking-[0.16em] text-brand-navy/45 dark:text-brand-white/45">
-          View role
-        </p>
-      </motion.button>
-
-      <MemberDetailModal
-        member={member}
-        open={open}
-        onClose={() => setOpen(false)}
-        titleId={titleId}
-      />
-    </>
   );
 }

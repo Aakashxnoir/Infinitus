@@ -1,75 +1,102 @@
-'use client';
+import Image from 'next/image';
+import Link from 'next/link';
+import { COPY } from '@/lib/site';
+import { eventHref, formatEventDate } from '@/lib/format';
 
-import { motion } from 'framer-motion';
+export { eventHref };
 
-function formatDate(dateStr) {
-  const date = new Date(dateStr);
-  if (Number.isNaN(date.getTime())) return dateStr;
-  return date.toLocaleDateString('en-IN', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-  });
+export function ExternalArrow() {
+  return (
+    <span aria-hidden="true" className="nudge nudge-ne">
+      ↗
+    </span>
+  );
 }
 
-export default function EventCard({ event }) {
-  const isUpcoming = event.status === 'upcoming';
-  const formUrl = event.registrationFormUrl || event.externalLink;
+export function EventPoster({ event, sizes, priority = false, className = '' }) {
+  if (!event.coverImageUrl) {
+    return (
+      <div className={`flex items-center justify-center ${className}`}>
+        <span aria-hidden="true" className="font-serif text-7xl text-accent/60">∞</span>
+      </div>
+    );
+  }
 
   return (
-    <motion.div
-      whileHover={{ y: -8, scale: 1.01 }}
-      whileTap={{ scale: 0.99 }}
-      transition={{ duration: 0.25, ease: 'easeOut' }}
-      className="interactive-card flex h-full flex-col p-5"
-    >
-      <div className="flex items-start justify-between gap-3">
-        <span
-          className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold ${
-            isUpcoming
-              ? 'bg-brand-amber/15 text-brand-amber'
-              : 'bg-brand-navy/10 text-brand-navy dark:bg-brand-white/10 dark:text-brand-white'
-          }`}
-        >
-          {isUpcoming ? 'Upcoming' : 'Past'}
+    <Image
+      src={event.coverImageUrl}
+      alt={`${event.title} poster`}
+      fill
+      sizes={sizes}
+      priority={priority}
+      unoptimized={event.coverImageUrl.startsWith('http')}
+      className={`object-cover ${className}`}
+    />
+  );
+}
+
+/** Poster card. The title links to the event page and stretches over the whole card. */
+export default function EventCard({ event }) {
+  const isUpcoming = event.status === 'upcoming';
+
+  return (
+    <article className="card card-hover group relative flex h-full flex-col transition-[transform,border-color,box-shadow] duration-500 ease-out hover:-translate-y-1.5 hover:shadow-[0_24px_48px_-24px_rgb(var(--fg)/0.35)]">
+      <div className="relative aspect-[4/5] overflow-hidden border-b border-fg/15 bg-bg-2">
+        <EventPoster
+          event={event}
+          sizes="(min-width: 1536px) 25vw, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+          className="h-full w-full transition-transform duration-700 ease-out group-hover:scale-[1.05]"
+        />
+        <span className="chip absolute left-3 top-3 bg-bg text-fg">
+          {formatEventDate(event.eventDate, event.endDate)}
         </span>
-        {event.eventType && (
-          <span className="text-xs font-medium uppercase tracking-wide text-brand-ink/40 dark:text-brand-white/40">
-            {event.eventType}
+        {isUpcoming && (
+          <span className="chip absolute right-3 top-3 border-gold/40 bg-bg text-gold">
+            Upcoming
           </span>
         )}
+        <span
+          aria-hidden="true"
+          className="absolute bottom-3 right-3 flex h-10 w-10 translate-y-3 items-center justify-center rounded-full bg-bg text-fg opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100"
+        >
+          →
+        </span>
       </div>
 
-      <h3 className="mt-3 font-heading text-lg font-semibold text-brand-navy dark:text-brand-white">
-        {event.title}
-      </h3>
+      <div className="flex flex-1 flex-col p-5 sm:p-6">
+        {event.eventType && (
+          <p className="font-mono text-xs text-accent">{event.eventType}</p>
+        )}
+        <h3 className="mt-2 font-heading text-lg font-semibold leading-snug text-fg">
+          <Link
+            href={eventHref(event)}
+            className="after:absolute after:inset-0 after:content-[''] focus-visible:outline-none focus-visible:after:rounded-md focus-visible:after:ring-2 focus-visible:after:ring-accent"
+          >
+            {event.title}
+          </Link>
+        </h3>
+        {event.venue && <p className="mt-1 text-xs text-muted">{event.venue}</p>}
+        {event.description && (
+          <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-muted">{event.description}</p>
+        )}
 
-      <p className="mt-1 text-sm text-brand-ink/50 dark:text-brand-white/50">
-        {formatDate(event.eventDate)}
-        {event.venue ? ` · ${event.venue}` : ''}
-      </p>
-
-      {event.description && (
-        <p className="mt-3 flex-1 text-sm leading-relaxed text-brand-ink/70 dark:text-brand-white/70">
-          {event.description}
-        </p>
-      )}
-
-      {formUrl ? (
-        <a
-          href={formUrl}
-          target="_blank"
-          rel="noreferrer noopener"
-          className="interactive-btn mt-4 inline-flex items-center justify-center gap-2 rounded-full bg-brand-navy px-4 py-2.5 text-sm font-semibold text-brand-white hover:bg-brand-navyMid dark:bg-brand-white dark:text-brand-navy dark:hover:bg-brand-sky"
-        >
-          {isUpcoming ? 'View details & register' : 'Open form'}
-          <span aria-hidden="true">→</span>
-        </a>
-      ) : isUpcoming ? (
-        <p className="mt-4 text-xs font-medium text-brand-ink/40 dark:text-brand-white/40">
-          Registration form will be posted here soon.
-        </p>
-      ) : null}
-    </motion.div>
+        <div className="relative z-10 mt-auto pt-5">
+          {isUpcoming && event.registrationFormUrl ? (
+            <a href={event.registrationFormUrl} target="_blank" rel="noreferrer noopener" className="btn-primary w-full">
+              {COPY.events.registerCta} <ExternalArrow />
+            </a>
+          ) : event.externalLink ? (
+            <a
+              href={event.externalLink}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="inline-flex items-center gap-1 text-sm font-medium text-fg/80 transition-colors hover:text-accent"
+            >
+              {COPY.events.viewPost} <ExternalArrow />
+            </a>
+          ) : null}
+        </div>
+      </div>
+    </article>
   );
 }
