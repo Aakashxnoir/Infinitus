@@ -208,12 +208,10 @@ CSS keyframes or SMIL, so GitHub plays it as a plain image.
 
 <table>
 <tr>
-<td width="96"><img src="public/brand/infinitus-footer.webp" width="80" alt="INFINITUS"></td>
-<td><b>Austin Joshua M</b><br>President, INFINITUS 2026–27. Leads the club and its Core Committee.</td>
-</tr>
-<tr>
+<td width="96"><a href="https://github.com/Austin-Joshua"><img src="https://github.com/Austin-Joshua.png?size=160" width="80" alt="Austin-Joshua"></a></td>
+<td><b>Austin Joshua M</b> · <a href="https://github.com/Austin-Joshua">@Austin-Joshua</a><br>President, INFINITUS 2026–27.<br>Leads the club and its Core Committee.</td>
 <td width="96"><a href="https://github.com/Aakashxnoir"><img src="https://github.com/Aakashxnoir.png?size=160" width="80" alt="Aakashxnoir"></a></td>
-<td><b>Aakash Buddha Kannan</b> · <a href="https://github.com/Aakashxnoir">@Aakashxnoir</a><br>Technical Head, INFINITUS 2026–27. Built the website.</td>
+<td><b>Aakash Buddha Kannan</b> · <a href="https://github.com/Aakashxnoir">@Aakashxnoir</a><br>Technical Head, INFINITUS 2026–27.<br>Built the website.</td>
 </tr>
 </table>
 
