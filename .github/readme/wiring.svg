@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 320" width="960" height="320" role="img" aria-label="lib/data.js and an optional Supabase feed getMembers() and getEvents(), which serve the pages and the read-only JSON API">
+<title>lib/data.js and an optional Supabase feed getMembers() and getEvents(), which serve the pages and the read-only JSON API</title>
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2=".2" y2="1"><stop offset="0" stop-color="#07091a"/><stop offset=".55" stop-color="#0c0e1f"/><stop offset="1" stop-color="#151934"/></linearGradient>
+<pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 .5H.5V48" fill="none" stroke="#eceae2" stroke-opacity=".06"/></pattern>
+<radialGradient id="gridfade" cx=".5" cy=".4" r=".7"><stop offset=".3" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+<mask id="gridmask"><rect width="960" height="320" fill="url(#gridfade)"/></mask>
+<radialGradient id="glow"><stop offset="0" stop-color="#8a9bff" stop-opacity=".55"/><stop offset="1" stop-color="#8a9bff" stop-opacity="0"/></radialGradient>
+<clipPath id="card"><rect width="960" height="320" rx="22"/></clipPath>
+
+</defs>
+<style>
+.s{font-family:'STIX Two Text','STIX Two Math',Cambria,Georgia,'Times New Roman',serif}
+.b{font-family:'IBM Plex Sans',Inter,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+.m{font-family:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,'DejaVu Sans Mono','Liberation Mono',monospace}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}.mo{display:none}}</style>
+<g clip-path="url(#card)">
+<rect width="960" height="320" fill="url(#bg)"/>
+<rect width="960" height="320" fill="url(#grid)" mask="url(#gridmask)"/>
+
+<g class="m" font-size="10" fill="rgba(236,234,226,.4)" letter-spacing="1.5"><text x="40" y="34">SOURCES</text><text x="360" y="34">LIB</text><text x="690" y="34">SERVED</text></g>
+<text class="m" x="505" y="24" font-size="10" fill="rgba(236,234,226,.4)" text-anchor="middle">gallery</text>
+<path d="M280 87C320 87 320 117 360 117" fill="none" stroke="#8a9bff" stroke-opacity="0.32" stroke-width="1.2"/><path d="M280 87C320 87 320 227 360 227" fill="none" stroke="#8a9bff" stroke-opacity="0.32" stroke-width="1.2"/><path d="M280 173C320 173 320 117 360 117" fill="none" stroke="#8a9bff" stroke-opacity="0.3" stroke-width="1.2" stroke-dasharray="4 5"/><path d="M280 173C320 173 320 227 360 227" fill="none" stroke="#8a9bff" stroke-opacity="0.3" stroke-width="1.2" stroke-dasharray="4 5"/><path d="M280 259C320 259 320 117 360 117" fill="none" stroke="#8a9bff" stroke-opacity="0.32" stroke-width="1.2"/><path d="M610 117C650 117 650 106 690 106" fill="none" stroke="#8a9bff" stroke-opacity="0.32" stroke-width="1.2"/><path d="M610 227C650 227 650 106 690 106" fill="none" stroke="#8a9bff" stroke-opacity="0.32" stroke-width="1.2"/><path d="M610 117C650 117 650 227 690 227" fill="none" stroke="#8a9bff" stroke-opacity="0.32" stroke-width="1.2"/><path d="M610 227C650 227 650 227 690 227" fill="none" stroke="#8a9bff" stroke-opacity="0.32" stroke-width="1.2"/><path d="M280 70C480 22 560 22 690 80" fill="none" stroke="#8a9bff" stroke-opacity="0.32" stroke-width="1.2"/>
+<rect x="40.5" y="56.5" width="239" height="61" rx="10" fill="#151934" fill-opacity=".85" stroke="rgba(236,234,226,.14)" stroke-opacity="1"/>
+<text class="m" x="56" y="83" font-size="13" fill="#eceae2">lib/data.js</text>
+<text class="b" x="56" y="103" font-size="11" fill="#a0a3b8">members · events · gallery</text>
+<rect x="40.5" y="142.5" width="239" height="61" rx="10" fill="#151934" fill-opacity=".85" stroke="#8a9bff" stroke-opacity="0.55" stroke-dasharray="5 5"/>
+<text class="m" x="56" y="169" font-size="13" fill="#eceae2">Supabase</text>
+<text class="b" x="56" y="189" font-size="11" fill="#a0a3b8">optional · on when keys are set</text>
+<rect x="40.5" y="228.5" width="239" height="61" rx="10" fill="#151934" fill-opacity=".85" stroke="rgba(236,234,226,.14)" stroke-opacity="1"/>
+<text class="m" x="56" y="255" font-size="12" fill="#eceae2">lib/roleResponsibilities.js</text>
+<text class="b" x="56" y="275" font-size="11" fill="#a0a3b8">what each role looks after</text>
+<rect x="360.5" y="86.5" width="249" height="61" rx="10" fill="#151934" fill-opacity=".85" stroke="rgba(236,234,226,.14)" stroke-opacity="1"/>
+<text class="m" x="376" y="113" font-size="13" fill="#eceae2">getMembers()</text>
+<text class="b" x="376" y="133" font-size="11" fill="#a0a3b8">Supabase rows, or the bundled roster</text>
+<rect x="360.5" y="196.5" width="249" height="61" rx="10" fill="#151934" fill-opacity=".85" stroke="rgba(236,234,226,.14)" stroke-opacity="1"/>
+<text class="m" x="376" y="223" font-size="13" fill="#eceae2">getEvents()</text>
+<text class="b" x="376" y="243" font-size="11" fill="#a0a3b8">bundled + Supabase, newest first</text>
+<rect x="690.5" y="56.5" width="229" height="99" rx="10" fill="#151934" fill-opacity=".85" stroke="rgba(236,234,226,.14)" stroke-opacity="1"/>
+<text class="m" x="706" y="83" font-size="13" fill="#eceae2">Pages</text>
+<text class="m" x="706" y="103" font-size="11" fill="#a0a3b8">/  /about  /events</text><text class="m" x="706" y="120" font-size="11" fill="#a0a3b8">/team  /gallery  /contact</text><text class="b" x="706" y="137" font-size="11" fill="#a0a3b8">server-rendered, refreshed every 60 s</text>
+<rect x="690.5" y="196.5" width="229" height="61" rx="10" fill="#151934" fill-opacity=".85" stroke="rgba(236,234,226,.14)" stroke-opacity="1"/>
+<text class="m" x="706" y="223" font-size="12" fill="#eceae2">/api/members  /api/events</text>
+<text class="b" x="706" y="243" font-size="11" fill="#a0a3b8">read-only JSON</text>
+<g class="mo" opacity="1"><circle r="8" fill="url(#glow)"/><circle r="2.6" fill="#eceae2"/><animateMotion dur="2.4s" begin="0s" repeatCount="indefinite" path="M280 87C320 87 320 117 360 117"/></g><g class="mo" opacity="1"><circle r="8" fill="url(#glow)"/><circle r="2.6" fill="#eceae2"/><animateMotion dur="2.4s" begin="0.48s" repeatCount="indefinite" path="M280 87C320 87 320 227 360 227"/></g><g class="mo" opacity="0.5"><circle r="8" fill="url(#glow)"/><circle r="2.6" fill="#bac5ff"/><animateMotion dur="2.4s" begin="0.96s" repeatCount="indefinite" path="M280 173C320 173 320 117 360 117"/></g><g class="mo" opacity="0.5"><circle r="8" fill="url(#glow)"/><circle r="2.6" fill="#bac5ff"/><animateMotion dur="2.4s" begin="1.44s" repeatCount="indefinite" path="M280 173C320 173 320 227 360 227"/></g><g class="mo" opacity="1"><circle r="8" fill="url(#glow)"/><circle r="2.6" fill="#eceae2"/><animateMotion dur="2.4s" begin="1.92s" repeatCount="indefinite" path="M280 259C320 259 320 117 360 117"/></g><g class="mo" opacity="1"><circle r="8" fill="url(#glow)"/><circle r="2.6" fill="#eceae2"/><animateMotion dur="2.4s" begin="1.2s" repeatCount="indefinite" path="M610 117C650 117 650 106 690 106"/></g><g class="mo" opacity="1"><circle r="8" fill="url(#glow)"/><circle r="2.6" fill="#eceae2"/><animateMotion dur="2.4s" begin="1.68s" repeatCount="indefinite" path="M610 227C650 227 650 106 690 106"/></g><g class="mo" opacity="1"><circle r="8" fill="url(#glow)"/><circle r="2.6" fill="#eceae2"/><animateMotion dur="2.4s" begin="2.16s" repeatCount="indefinite" path="M610 117C650 117 650 227 690 227"/></g><g class="mo" opacity="1"><circle r="8" fill="url(#glow)"/><circle r="2.6" fill="#eceae2"/><animateMotion dur="2.4s" begin="2.64s" repeatCount="indefinite" path="M610 227C650 227 650 227 690 227"/></g><g class="mo" opacity="1"><circle r="8" fill="url(#glow)"/><circle r="2.6" fill="#eceae2"/><animateMotion dur="2.4s" begin="3.12s" repeatCount="indefinite" path="M280 70C480 22 560 22 690 80"/></g>
+</g>
+<rect x=".5" y=".5" width="959" height="319" rx="21.5" fill="none" stroke="rgba(236,234,226,.14)"/>
+</svg>
